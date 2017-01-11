@@ -58,15 +58,41 @@ Route::get('blog',['uses'=>'PagesController@getBlog','as'=>'blog']);
 
 
 //post resource controller
-Route::resource('posts','PostController');
+//Route::resource('posts','PostController');
+Route::group(['middleware'=>'roles'],function (){
+    Route::get('posts',['uses'=>'PostController@index',
+    'as'=>'posts.index']);
+
+    Route::POST('posts',['uses'=>'PostController@store',
+        'as'=>'posts.store']);
+    Route::get('posts/create',['uses'=>'PostController@create',
+        'as'=>'posts.create',
+        'roles'=>'Admin'
+    ]);
+    Route::delete('post/{post}',['uses'=>'PostController@destroy',
+        'as'=>'posts.destroy']);
+    Route::put('posts/{post}',['uses'=>'PostController@update',
+        'as'=>'posts.update']);
+    Route::get('posts/{post}',['uses'=>'PostController@show',
+        'as'=>'posts.show']);
+    Route::get('posts/{post}/edit',['uses'=>'PostController@edit',
+        'as'=>'posts.edit']);
+    Route::post('imageUpload',['uses'=>'FileUploadController@imageUpload',
+        'as'=>'file.upload']);
+});
+
 
 Route::get('delete-post/{id}',['uses'=>'PostController@getDelete',
-    'as'=>'posts.delete'
+    'as'=>'posts.delete',
+    'middleware'=>'roles',
+    'roles'=>['Admin']
 ]);
 
 //blog controller
 Route::get('single-blog/{slug}',['uses'=>'BlogController@getSingle',
-    'as'=>'blog.single'
+    'as'=>'blog.single',
+    'middleware'=>'roles',
+    'roles'=>['Admin']
 ]);
 
 //category controller
@@ -77,3 +103,12 @@ Route::resource('tags','TagController');
 
 //events controller
 Route::resource('events','EventController');
+
+Route::get('delete-event/{id}',['uses'=>'EventController@getDelete',
+    'as'=>'events.delete'
+]);
+
+//sermon controller
+Route::resource('sermons','SermonController');
+
+Route::resource('admin','AdminController');

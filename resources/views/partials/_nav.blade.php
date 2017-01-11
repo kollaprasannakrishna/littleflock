@@ -36,9 +36,9 @@
                                             </div>
                                             <div class="col-md-4"> <span class="megamenu-sub-title"><i class="fa fa-clock-o"></i> Upcoming Events</span>
                                                 <ul class="sub-menu">
-                                                    <li><a href="single-event.html">Monday Prayer</a> <span class="meta-data">Monday | 06:00 PM</span> </li>
-                                                    <li><a href="single-event.html">Staff members meet</a> <span class="meta-data">Tuesday | 08:00 AM</span> </li>
-                                                    <li><a href="single-event.html">Evening Prayer</a> <span class="meta-data">Friday | 07:00 PM</span> </li>
+                                                    <li><a href="#">Monday Prayer</a> <span class="meta-data">Monday | 06:00 PM</span> </li>
+                                                    <li><a href="#">Staff members meet</a> <span class="meta-data">Tuesday | 08:00 AM</span> </li>
+                                                    <li><a href="#">Evening Prayer</a> <span class="meta-data">Friday | 07:00 PM</span> </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -47,7 +47,7 @@
                             </ul>
                         </li>
 
-                        <li><a href="events.html">Messages</a>
+                        <li><a href="#">Messages</a>
                             <ul class="dropdown">
                                 <li><a href="{{route('atLittleFlock')}}">At Little Flock</a></li>
                                 <li><a href="{{route('atOthers')}}">Others</a></li>
@@ -57,6 +57,7 @@
                         <li><a href="{{route('gallery')}}">Gallery</a></li>
 
                         <li><a href="{{route('blog')}}">Blog</a></li>
+
 
                         <li><a href="{{route('contact')}}">Contact Us</a></li>
                     </ul>

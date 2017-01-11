@@ -6,12 +6,18 @@ use App\Category;
 use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Image;
+use File;
+use Log;
 
 class PostController extends Controller
 {
     public function __construct()
     {
+
         $this->middleware('auth');
+
     }
 
     /**
@@ -49,7 +55,9 @@ class PostController extends Controller
             'title'=>'required|max:255',
             'body'=>'required|min:10',
             'slug'=>'required|min:5|max:225',
-            'category_id'=>'required|integer'
+            'category_id'=>'required|integer',
+            'feature_image'=>'sometimes|image'
+
         ));
 
         $post=new Post();
@@ -58,6 +66,18 @@ class PostController extends Controller
         $post->body=$request->body;
         $post->slug=$request->slug;
         $post->category_id=$request->category_id;
+        if($request->hasFile('featured_image')){
+            $image=$request->file('featured_image');
+            Log::info($image);
+            $filename=time().'.'.$image->getClientOriginalExtension();
+            $location=public_path('blogImage/'.$filename);
+
+            //$audioLocation=public_path('blogImage');
+
+            Image::make($image)->resize(800,400)->save($location);
+            //$image->move($audioLocation,$filename);
+            $post->image=$filename;
+        }
 
         $request->user()->posts()->save($post);
 
@@ -124,18 +144,33 @@ class PostController extends Controller
             $this->validate($request,array(
                 'title'=>'required|max:255',
                 'body'=>'required|min:10',
-                'category_id'=>'required|integer'
+                'category_id'=>'required|integer',
+                'featured_image'=>'image'
             ));
         }else{
             $this->validate($request,array(
                 'title'=>'required|max:255',
                 'body'=>'required|min:10',
                 'slug'=>'required|min:5|max:225|unique:posts,slug',
-                'category_id'=>'required|integer'
+                'category_id'=>'required|integer',
+                'featured_image'=>'image'
             ));
             $post->slug=$request->slug;
         }
+        if($request->hasFile('featured_image')){
+            $image=$request->file('featured_image');
+            $filename=time().'.'.$image->getClientOriginalExtension();
 
+            $location=public_path('blogImage/'.$filename);
+
+            Image::make($image)->resize(800,400)->save($location);
+
+            $oldFileName=$post->image;
+
+            $post->image=$filename;
+
+            File::delete('blogImage/'.$oldFileName);
+        }
 
         $post->title=$request->title;
         $post->body=$request->body;

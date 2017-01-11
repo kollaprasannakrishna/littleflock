@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     @include('stylesAndJs.header')
+    @yield('styles')
 </head>
 <body>
 <!--[if lt IE 7]>
@@ -20,5 +21,6 @@
 
 
     @include('stylesAndJs.footer')
+    @yield('scripts')
 </body>
 </html>

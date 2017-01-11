@@ -32,8 +32,9 @@
                             </ul>
                     </li>
                     <li><a href="{{ route('events.create') }}">Events</a></li>
-                    <li><a href="{{ url('/register') }}">Carousel</a></li>
+                    <li><a href="{{ route('sermons.create') }}">Sermons</a></li>
                     <li><a href="{{ url('/register') }}">Address & Contact</a></li>
+                    <li><a href="{{route('admin.index')}}">Admin</a></li>
                     <li><a href="{{ url('/register') }}">Emails</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

@@ -3,13 +3,15 @@
 @section('title','| All Posts')
 
 @section('content')
-<div class="row">
+    <div class="container">
+    <div class="row">
     <div class="col-md-12">
         <h1>All Posts</h1>
         <hr>
     </div>
 </div>
 <div class="row">
+
     <div class="col-md-12">
         <div class="table-responsive">
         <table class="table table-hover">
@@ -42,6 +44,7 @@
             </tbody>
         </table>
     </div>
+        </div>
         </div>
 </div>
 <div class="text-center">

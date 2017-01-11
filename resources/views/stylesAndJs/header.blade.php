@@ -38,9 +38,6 @@
 <link href='http://fonts.googleapis.com/css?family=Raleway:100,200,300,700,800,900' rel='stylesheet' type='text/css' />
 
 
-<link href='assets/plugins/fullcalendar/fullcalendar.css' rel='stylesheet' />
-<link href='assets/plugins/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
-
 <!-- SCRIPTS
   ================================================== -->
 <script src="assets/js/modernizr.js"></script><!-- Modernizr -->

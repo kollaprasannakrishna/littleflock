@@ -6,5 +6,5 @@
     @include('partials._carousel')
     @include('index.noticeBar')
     @include('index.content')
-    @include('index.gallery')
+    {{--@include('index.gallery')--}}
 @endsection
