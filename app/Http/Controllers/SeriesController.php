@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Role;
-use App\User;
+use App\Series;
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class SeriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $users=User::all();
-        return view('controlPanel.admin.index')->with('users',$users);
-
+        //
     }
 
     /**
@@ -27,7 +24,9 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        $seriess=Series::all();
+
+        return view('controlPanel.series.create')->with('seriess',$seriess);
     }
 
     /**
@@ -38,7 +37,17 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name'=>'required|max:100'
+        ]);
+        $series=new Series();
+        $series->name=$request->name;
+
+        $series->save();
+
+        $request->session()->flash('success','Series created Succesfully');
+
+        return redirect()->route('series.create');
     }
 
     /**
@@ -60,14 +69,9 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        $user=User::find($id);
-        $roles=Role::all();
+        $series=Series::find($id);
 
-        $rol=array();
-        foreach ($roles as $role){
-            $rol[$role->id]=$role->name;
-        }
-        return view('controlPanel.admin.edit')->with('user',$user)->with('roles',$rol);
+        return view('controlPanel.series.edit')->with('series',$series);
     }
 
     /**
@@ -79,14 +83,17 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user=User::find($id);
-        if(isset($request->roles)){
-            $user->roles()->sync($request->roles,true);
-        }else{
-            $user->roles()->sync(array(),true);
-        }
-        return redirect()->route('admin.index',$user->id);
+        $this->validate($request,[
+            'name'=>'required|max:100'
+        ]);
+        $series=Series::find($id);
+        $series->name=$request->name;
 
+        $series->save();
+
+        $request->session()->flash('success','Series created Succesfully');
+
+        return redirect()->route('series.create');
     }
 
     /**

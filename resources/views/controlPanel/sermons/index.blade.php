@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title','| All Posts')
+@section('title','| All Sermons')
 
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>All Posts</h1>
+                <h1>All Sermons</h1>
                 <hr>
             </div>
         </div>
@@ -21,24 +21,24 @@
                             <th>Title</th>
                             <th>Body</th>
                             <th>Author</th>
-                            <th>Category</th>
+                            <th>Series</th>
                             <th>Edit</th>
                             <th>View</th>
                             <th>Delete</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($posts as $post)
+                        @foreach($sermons as $sermon)
                             <tr>
-                                <td>{{$post->id}}</td>
-                                <td>{{$post->title}}</td>
-                                <td>{{$post->body}}</td>
-                                <td>{{$post->user->name}}</td>
-                                <td>{{$post->category->name}}</td>
-                                <td><a href="{{route('posts.edit',$post->id)}}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                                <td><a href="{{route('posts.show',$post->id )}}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+                                <td>{{$sermon->id}}</td>
+                                <td>{{$sermon->title}}</td>
+                                <td>{{$sermon->speaker}}</td>
+                                <td>{{$sermon->venue->name}}</td>
+                                <td>{{$sermon->series->name}}</td>
+                                <td><a href="{{route('sermons.edit',$sermon->id)}}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                <td><a href="{{route('sermons.show',$sermon->id )}}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a></td>
                                 <td>
-                                    <a href="{{route('posts.delete',$post->id)}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a></td>
+                                    <a href="{{route('sermons.destroy',$sermon->id)}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a></td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -48,6 +48,7 @@
         </div>
     </div>
     <div class="text-center">
-        {{$posts->links()}}
+
     </div>
 @endsection
+

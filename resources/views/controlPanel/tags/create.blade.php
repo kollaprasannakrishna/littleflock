@@ -64,5 +64,6 @@
             tags: true,
             tokenSeparators: [',', ' ']
         });
+
     </script>
 @endsection

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Role;
-use App\User;
+use App\Group;
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class GroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $users=User::all();
-        return view('controlPanel.admin.index')->with('users',$users);
-
+        //
     }
 
     /**
@@ -27,7 +24,9 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        $groups=Group::all();
+
+        return view('controlPanel.groups.create')->with('groups',$groups);
     }
 
     /**
@@ -38,7 +37,17 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name'=>'required|max:100'
+        ]);
+        $group=new Group();
+        $group->name=$request->name;
+
+        $group->save();
+
+        $request->session()->flash('success','Group created Succesfully');
+
+        return redirect()->route('groups.create');
     }
 
     /**
@@ -60,14 +69,10 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        $user=User::find($id);
-        $roles=Role::all();
+        $group=Group::find($id);
 
-        $rol=array();
-        foreach ($roles as $role){
-            $rol[$role->id]=$role->name;
-        }
-        return view('controlPanel.admin.edit')->with('user',$user)->with('roles',$rol);
+        return view('controlPanel.groups.edit')->with('group',$group);
+
     }
 
     /**
@@ -79,14 +84,17 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user=User::find($id);
-        if(isset($request->roles)){
-            $user->roles()->sync($request->roles,true);
-        }else{
-            $user->roles()->sync(array(),true);
-        }
-        return redirect()->route('admin.index',$user->id);
+        $this->validate($request,[
+            'name'=>'required|max:100'
+        ]);
+        $group=Group::find($id);
+        $group->name=$request->name;
 
+        $group->save();
+
+        $request->session()->flash('success','Grou[ created Succesfully');
+
+        return redirect()->route('groups.create');
     }
 
     /**

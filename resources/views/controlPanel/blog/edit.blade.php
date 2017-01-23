@@ -16,7 +16,7 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                {!! Form::model($post,['route'=>['posts.update',$post->id],['class'=>'filesAjax'],'method'=>'PUT','files'=>true]) !!}
+                {!! Form::model($post,['route'=>['posts.update',$post->id],'method'=>'PUT','files'=>true]) !!}
                 {{Form::label('title','Title:')}}
                 {{Form::text('title',null,array('class'=>'form-control'))}}
 
@@ -44,7 +44,7 @@
                 {{--<audio controls>
                     <source src="{{URL::to('blogImage/'.$post->image)}}" type="audio/mpeg">
                 </audio>--}}
-                {{HTML::image('blogImage/'.$post->image)}}
+
             </div>
         </div>
     </div>
@@ -57,6 +57,6 @@
         $('.select2-multi').select2().val({!! json_encode($post->tags()->getRelatedIds()) !!}).trigger('change');
 
 
-        //$('.')
+
     </script>
 @endsection

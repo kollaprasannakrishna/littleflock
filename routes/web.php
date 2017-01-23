@@ -110,5 +110,23 @@ Route::get('delete-event/{id}',['uses'=>'EventController@getDelete',
 
 //sermon controller
 Route::resource('sermons','SermonController');
+//venue controller
+Route::resource('venue','VenueController');
+//series
+Route::resource('series','SeriesController');
+
+//members
+Route::resource('members','MemberController');
+//positions
+Route::resource('positions','PositionController');
+//groups
+Route::resource('groups','GroupController');
+//Addmember
+Route::resource('addmembers','AddmemberController');
+
+
+//emails
+Route::get('create-email',['uses'=>'EmailController@create','as'=>'emails.create']);
+Route::post('send-email',['uses'=>'EmailController@send','as'=>'emails.send']);
 
 Route::resource('admin','AdminController');

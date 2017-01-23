@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Role;
-use App\User;
+use App\Position;
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class PositionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $users=User::all();
-        return view('controlPanel.admin.index')->with('users',$users);
-
+        //
     }
 
     /**
@@ -27,7 +24,9 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        $positions=Position::all();
+
+        return view('controlPanel.positions.create')->with('positions',$positions);
     }
 
     /**
@@ -38,7 +37,15 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'title'=>'required'
+        ]);
+        $position=new Position();
+        $position->title=$request->title;
+        $position->save();
+        $request->session()->flash('success','Position Created Successfully');
+
+        return redirect()->back();
     }
 
     /**
@@ -60,14 +67,9 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        $user=User::find($id);
-        $roles=Role::all();
+        $position=Position::find($id);
 
-        $rol=array();
-        foreach ($roles as $role){
-            $rol[$role->id]=$role->name;
-        }
-        return view('controlPanel.admin.edit')->with('user',$user)->with('roles',$rol);
+        return view('controlPanel.positions.edit')->with('position',$position);
     }
 
     /**
@@ -79,13 +81,15 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user=User::find($id);
-        if(isset($request->roles)){
-            $user->roles()->sync($request->roles,true);
-        }else{
-            $user->roles()->sync(array(),true);
-        }
-        return redirect()->route('admin.index',$user->id);
+        $this->validate($request,[
+            'title'=>'required'
+        ]);
+        $position=Position::find($id);
+        $position->title=$request->title;
+        $position->save();
+        $request->session()->flash('success','Position Updated Successfully');
+
+        return redirect()->route('positions.create');
 
     }
 
@@ -95,8 +99,14 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        //
+        $position=Position::find($id);
+
+        $position->delete();
+
+        $request->session()->flash('success','Deleted Successfully');
+
+        return redirect()->back();
     }
 }

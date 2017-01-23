@@ -16,29 +16,25 @@
             </div>
         </div>
         <div class="row">
-            {!! Form::open(['route'=>'sermons.store','files'=>true,'id'=>'eventForm']) !!}
+            {!! Form::model($sermon,['route'=>['sermons.update',$sermon->id],'files'=>true,'id'=>'eventForm','method'=>'PUT']) !!}
             <div class="col-md-4 col-md-offset-1">
                 <div class="panel panel-info">
                     <div class="panel-heading">Panel heading</div>
                     <div class="panel-body">
-                {{Form::label('title','Sermon Title:')}}
-                {{Form::text('title',null,array('class'=>'form-control'))}}
+                        {{Form::label('title','Sermon Title:')}}
+                        {{Form::text('title',null,array('class'=>'form-control'))}}
 
 
                         {{Form::label('speaker','Speaker:')}}
                         {{Form::text('speaker',null,array('class'=>'form-control'))}}
 
-                {{Form::label('venue_id','Venue:')}}
-                        <select class="form-control" name="venue_id">
-                            @foreach($venues as $venue)
-                                <option value="{{$venue->id}}">{{$venue->name }}</option>
-                            @endforeach
-                        </select>
+                        {{Form::label('venue_id','Venue:')}}
+                        {{Form::select('venue_id',$venues,null,['class'=>'form-control'])}}
 
-                {{ Form::label('date','Sermon Date:') }}
-                {{Form::date('date',null,['class'=>'form-control'])}}
-                        </div>
+                        {{ Form::label('date','Sermon Date:') }}
+                        {{Form::date('date',null,['class'=>'form-control'])}}
                     </div>
+                </div>
 
             </div>
 
@@ -46,10 +42,10 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">Panel heading</div>
                     <div class="panel-body">
-                {{Form::label('description','Sermon Description:')}}
-                {{Form::textarea('description',null,array('class'=>'form-control'))}}
-                        </div>
+                        {{Form::label('description','Sermon Description:')}}
+                        {{Form::textarea('description',null,array('class'=>'form-control'))}}
                     </div>
+                </div>
 
             </div>
             <div class="col-md-4 col-md-offset-1">
@@ -72,22 +68,18 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">Panel heading</div>
                     <div class="panel-body">
-                {{Form::label('series_id','Series')}}
-                        <select class="form-control" name="series_id">
-                            @foreach($seriess as $series)
-                                <option value="{{$series->id}}">{{$series->name }}</option>
-                            @endforeach
-                        </select>
+                        {{Form::label('series_id','Series')}}
+                        {{Form::select('series_id',$seriess,null,['class'=>'form-control'])}}
 
 
-                {{Form::submit('Add Sermon',array('class'=>'btn btn-success btn-lg btn-block','style'=>'margin-top:20px'))}}
+                        {{Form::submit('Update Sermon',array('class'=>'btn btn-success btn-lg btn-block','style'=>'margin-top:20px'))}}
 
                     </div>
-                    </div>
+                </div>
 
             </div>
 
-                {!! Form::close() !!}
+            {!! Form::close() !!}
         </div>
 
     </div>

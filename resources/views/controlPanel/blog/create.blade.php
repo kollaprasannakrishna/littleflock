@@ -3,7 +3,11 @@
 @section('title','| Create Post')
 
 @section('styles')
+    {!! Html::style('assets/css/quill.snow.css') !!}
     {!! Html::style('assets/css/select2.min.css') !!}
+    {!! Html::style('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css') !!}
+    {!! Html::style('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/monokai-sublime.min.css') !!}
+
 @endsection
 
 @section('content')
@@ -39,28 +43,25 @@
 
                     {{Form::label('featured_image','Upload Featured Image')}}
                     {{Form::file('featured_image',['class'=>'form-control'])}}
-   <button class="btn btn-primary fileUpload" type="button">Upload</button>
-     <div class="suceessUP hidden">
-         <p>Uploaded success fully</p>
-     </div>
 
      {{Form::label('body','Post Body:')}}
-     {{Form::textarea('body',null,array('class'=>'form-control fileData'))}}
+     {{Form::textarea('body',null,array('class'=>'form-control fileData','id'=>'snow-container'))}}
 
      {{Form::submit('Create Post',array('class'=>'btn btn-success btn-lg btn-block','style'=>'margin-top:20px'))}}
 
  {!! Form::close() !!}
 </div>
-          {{--  <div class="col-md-6">
+
+           {{--<div class="col-md-6">
                 {!! Form::open(array('route'=>'file.upload','files'=>true)) !!}
                     {{Form::label('featured_image1','Upload Featured Image')}}
                     {{Form::file('featured_image1',['class'=>'form-control'])}}
-                    {{Form::submit('Upload',array('class'=>'btn btn-success upload-image','style'=>'margin-top:20px'))}}
+                    {{Form::submit('Upload',array('class'=>'btn btn-success','style'=>'margin-top:20px'))}}
                 {!! Form::close() !!}
-            </div>--}}
+            </div>
 <div class="col-md-6">
 {{HTML::image('assets/images/logo/little_logo_2.png')}}
-</div>
+</div>--}}
 </div>
 </div>
 
@@ -68,31 +69,32 @@
 
 @section('scripts')
 {!! Html::script('assets/js/select2.min.js') !!}
+{!! Html::script('assets/js/quill.js') !!}
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js') !!}
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js') !!}
 <script type="text/javascript">
 $('.select2-multi').select2();
+</script>
 
-$("body").on("click",".upload-image",function(e){
-    $(this).parents("form").ajaxForm(options);
-});
 
-var options = {
-    complete: function(response)
-    {
-        if($.isEmptyObject(response.responseJSON.error)){
-            $("input[name='title']").val('');
-            alert('Image Upload Successfully.');
-        }else{
-            printErrorMsg(response.responseJSON.error);
-        }
-    }
-};
 
-function printErrorMsg (msg) {
-    $(".print-error-msg").find("ul").html('');
-    $(".print-error-msg").css('display','block');
-    $.each( msg, function( key, value ) {
-        $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
+
+<script type="text/javascript">
+
+    var options = {
+        debug: 'info',
+        modules: {
+            toolbar: '#toolbar'
+        },
+        placeholder: 'Compose an epic...',
+        readOnly: true,
+        theme: 'snow'
+    };
+    var quill = new Quill('#snow-container', {
+        placeholder: 'Compose an epic...',
+        theme: 'snow',
+        debug: 'info',
+
     });
-}
 </script>
 @endsection

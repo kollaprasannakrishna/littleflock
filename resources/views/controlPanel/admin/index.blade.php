@@ -18,10 +18,9 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Title</th>
-                            <th>Body</th>
-                            <th>Author</th>
-                            <th>Category</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Roles</th>
                             <th>Edit</th>
                             <th>View</th>
                             <th>Delete</th>
@@ -33,12 +32,12 @@
                                 <td>{{$user->id}}</td>
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
+                                <td>
                                 @foreach($user->roles as $role)
-                                    <td>{{$role->name}}</td>
+                                    |{{$role->name}}|
                                 @endforeach
-
-                                <td></td>
-                                <td><a href="#" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                </td>
+                                <td><a href="{{route('admin.edit',$user->id)}}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                 <td><a href="#" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a></td>
                                 <td>
                                     <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a></td>

@@ -1,18 +1,22 @@
 @extends('layouts.app')
 
-@section('title','| All Posts')
+@section('title','| Create Categories')
 
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>All Posts</h1>
+                <h1>{{$category->name}}</h1>
                 <hr>
             </div>
         </div>
         <div class="row">
-
             <div class="col-md-12">
+                <h3>{{$category->posts->count()}} are Associated Posts</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
@@ -28,7 +32,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($posts as $post)
+                        @foreach($category->posts as $post)
                             <tr>
                                 <td>{{$post->id}}</td>
                                 <td>{{$post->title}}</td>
@@ -45,9 +49,13 @@
                     </table>
                 </div>
             </div>
+            <div class="col-md-4">
+                {!! Form::open(['route'=>'categories.store','method'=>'POST']) !!}
+                {{Form::label('name','Category Name')}}
+                {{Form::text('name',null,['class'=>'form-control'])}}
+                {{Form::submit('Create new',['class'=>'btn btn-success btn-block','style'=>'margin-top:20px;'])}}
+                {!! Form::close() !!}
+            </div>
         </div>
     </div>
-    <div class="text-center">
-        {{$posts->links()}}
-    </div>
-@endsection
+@stop

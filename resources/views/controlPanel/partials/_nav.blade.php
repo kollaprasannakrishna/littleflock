@@ -32,11 +32,25 @@
                             </ul>
                     </li>
                     <li><a href="{{ route('events.create') }}">Events</a></li>
-                    <li><a href="{{ route('sermons.create') }}">Sermons</a></li>
-                    <li><a href="{{ url('/register') }}">Address & Contact</a></li>
+                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Messages <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ route('sermons.create') }}">Create Sermon</a></li>
+                            <li><a href="{{ route('sermons.index') }}">Show all Sermons</a></li>
+                            <li><a href="{{ route('series.create') }}">Series</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="{{ route('venue.create') }}">Address & Contact</a></li>
                     <li><a href="{{route('admin.index')}}">Admin</a></li>
-                    <li><a href="{{ url('/register') }}">Emails</a></li>
-                    <li class="dropdown">
+                    <li><a href="{{route('emails.create')}}">Emails</a></li>
+                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Messages <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ route('members.create') }}">Member Signup</a></li>
+                            <li><a href="{{ route('positions.create') }}">Create Position</a></li>
+                            <li><a href="{{ route('groups.create') }}">Create Groups</a></li>
+                        </ul>
+                    </li>
+                        <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
