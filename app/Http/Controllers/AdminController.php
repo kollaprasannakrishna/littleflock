@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+
+        $this->middleware('auth');
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -95,8 +103,25 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        //
+        $user=User::find($id);
+
+        if(Auth::user()->id == $user->id){
+            $request->session()->flash('failure','Can\'t delete yourself');
+
+            return redirect()->back();
+        }
+        $user->roles()->detach();
+        $postDelete=new Post();
+        foreach ($user->posts as $post){
+            $postDelete->deleteMedia($post);
+            $post->tags()->detach();
+            $post->delete();
+        }
+
+        $user->delete();
+        $request->session()->flash('success','User delete yourself');
+        return redirect()->back();
     }
 }

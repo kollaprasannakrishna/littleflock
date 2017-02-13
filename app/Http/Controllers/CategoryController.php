@@ -112,14 +112,19 @@ class CategoryController extends Controller
     public function destroy(Request $request,$id)
     {
         $category=Category::find($id);
-
-        foreach ($category->posts as $post){
-            $post=Post::find($post->id);
-            $post->category_id=4;
+        if($category->id == 4) {
+            $request->session()->flash('failure',$category->name.' Category Can\'t be  deleted');
+            return redirect()->route('categories.create');
+        }
+        foreach ($category->posts as $post) {
+            $post = Post::find($post->id);
+            $post->category_id = 4;
             $post->save();
         }
         $category->delete();
         $request->session()->flash('success',$category->name.' Category Deleted SuccessFully');
         return redirect()->route('categories.create');
+
+
     }
 }

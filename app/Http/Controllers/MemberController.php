@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Member;
 use App\Position;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Input;
 
 class MemberController extends Controller
 {
+    public function __construct()
+    {
+
+        $this->middleware('auth');
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -151,6 +159,50 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $member=Member::find($id);
+        $member->positions()->detach();
+        $member->groups()->detach();
+        $member->emails()->detach();
+        $member->delete();
+        \Session::flash('success', 'Deleted Successfully.');
+
+        return redirect()->route('members.create');
+    }
+
+    public function import(Request $request){
+        $this->validate($request,[
+            'member_excel' => 'required',
+        ]);
+
+        try {
+            Excel::load(Input::file('member_excel'), function ($reader) {
+
+
+                foreach ($reader->toArray() as $row) {
+                    $member=new Member();
+                    $member->firstname=$row['firstname'];
+                    $member->lastname=$row['lastname'];
+                    $member->email=$row['email'];
+                    $member->address1=$row['address1'];
+                    $member->address2=$row['address2'];
+                    $member->city=$row['city'];
+                    $member->state=$row['state'];
+                    $member->zip=$row['zip'];
+                    $member->phone=$row['phone'];
+
+                    $member->save();
+                    $member->positions()->sync(array(2),true);
+
+                    //Member::firstOrCreate($row);
+                }
+                //$results = $reader->get();
+
+            });
+            \Session::flash('success', 'Users uploaded successfully.');
+            return redirect(route('members.create'));
+        } catch (\Exception $e) {
+            \Session::flash('failure', $e->getMessage());
+            return redirect(route('members.create'));
+        }
     }
 }

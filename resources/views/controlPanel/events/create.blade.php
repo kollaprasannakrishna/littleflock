@@ -20,9 +20,63 @@
             </div>
         </div>
         <div class="row">
+            {!! Form::open(['route'=>'events.store','files'=>true,'id'=>'eventForm']) !!}
+            <div class="col-md-4">
+                {{Form::label('name','Event Title:')}}
+                {{Form::text('name',null,array('class'=>'form-control'))}}
 
 
-                <div class="col-md-8">
+                {{ Form::label('date','Event Date:') }}
+                {{Form::date('date',null,['class'=>'form-control'])}}
+
+                {{Form::label('featured_image','Upload Featured Image')}}
+                {{Form::file('featured_image',['class'=>'form-control'])}}
+
+            </div>
+            <div class="col-md-4">
+                {{ Form::label('time','Event Time:') }}
+                <input type="text" class="form-control timepicker" name="time">
+
+                {{Form::label('venue_id','Venue:')}}
+                <select class="form-control" name="venue_id">
+                    @foreach($venues as $venue)
+                        <option value="{{$venue->id}}">{{$venue->name }}</option>
+                    @endforeach
+                </select>
+
+
+            </div>
+            <div class="col-md-4">
+                {{Form::label('type','Event Type')}}
+                <select class="form-control" name="type" id="mylist">
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="special">Special</option>
+                </select>
+
+                {{Form::label('day','Event Day')}}
+                <select class="form-control" name="day">
+                    <option value="sunday">Sunday</option>
+                    <option value="monday">Monday</option>
+                    <option value="tuesday">Tuesday</option>
+                    <option value="wednesday">Wednesday</option>
+                    <option value="thursday">Thursday</option>
+                    <option value="friday">Friday</option>
+                    <option value="saturday">Saturday</option>
+                </select>
+
+            </div>
+            <div class="col-md-12">
+                {{Form::label('description','Event Description:')}}
+                {{Form::textarea('description',null,array('class'=>'form-control'))}}
+
+
+                {{Form::submit('Create Event',array('class'=>'btn btn-success btn-lg btn-block','style'=>'margin-top:20px'))}}
+
+            </div>
+
+            {!! Form::close() !!}
+                <div class="col-md-12">
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
@@ -47,7 +101,7 @@
                                 <td>{{$event->description}}</td>
                                 <td>{{$event->date}}</td>
                                 <td>{{$event->time}}</td>
-                                <td>{{$event->venue}}</td>
+                                <td>{{$event->venue->name }}</td>
                                 <td>{{$event->day}}</td>
                                 <td>{{$event->type}}</td>
                                 <td>{{$event->user->name}}</td>
@@ -63,48 +117,11 @@
                     </div>
                 </div>
             <div class="col-md-4">
-                {!! Form::open(['route'=>'events.store','id'=>'eventForm']) !!}
-                {{Form::label('title','Event Title:')}}
-                {{Form::text('title',null,array('class'=>'form-control'))}}
-
-
-                {{ Form::label('date','Event Date:') }}
-                {{Form::date('date',null,['class'=>'form-control'])}}
-
-                {{ Form::label('time','Event Time:') }}
-                <input type="text" class="form-control timepicker" name="time">
-
-                {{Form::label('venue','Venue')}}
-                {{Form::text('venue',null,['class'=>'form-control'])}}
-                {{Form::label('type','Event Type')}}
-                <select class="form-control" name="type" id="mylist">
-                    <option value="weekly">Weekly</option>
-                    <option value="monthly">Monthly</option>
-                    <option value="special">Special</option>
-                </select>
-
-
-                {{Form::label('tags','Tags')}}
 
 
 
-                {{Form::label('day','Event Day')}}
-                <select class="form-control" name="day">
-                    <option value="sunday">Sunday</option>
-                    <option value="monday">Monday</option>
-                    <option value="tuesday">Tuesday</option>
-                    <option value="wednesday">Wednesday</option>
-                    <option value="thursday">Thursday</option>
-                    <option value="friday">Friday</option>
-                    <option value="saturday">Saturday</option>
-                </select>
 
-                {{Form::label('description','Event Description:')}}
-                {{Form::textarea('description',null,array('class'=>'form-control'))}}
 
-                {{Form::submit('Create Event',array('class'=>'btn btn-success btn-lg btn-block','style'=>'margin-top:20px'))}}
-
-                {!! Form::close() !!}
             </div>
     </div>
 

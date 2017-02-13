@@ -36,9 +36,10 @@
                                             </div>
                                             <div class="col-md-4"> <span class="megamenu-sub-title"><i class="fa fa-clock-o"></i> Upcoming Events</span>
                                                 <ul class="sub-menu">
-                                                    <li><a href="#">Monday Prayer</a> <span class="meta-data">Monday | 06:00 PM</span> </li>
-                                                    <li><a href="#">Staff members meet</a> <span class="meta-data">Tuesday | 08:00 AM</span> </li>
-                                                    <li><a href="#">Evening Prayer</a> <span class="meta-data">Friday | 07:00 PM</span> </li>
+                                                    @foreach($events as $event)
+                                                        <li><a href="#">{{$event->name}}</a> <span class="meta-data">{{$event->day}} | {{date('H:i A',strtotime($event->time) )}}</span> </li>
+                                                    @endforeach
+
                                                 </ul>
                                             </div>
                                         </div>

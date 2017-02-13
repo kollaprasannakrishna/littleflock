@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use File;
 
 class Post extends Model
 {
@@ -16,5 +17,10 @@ class Post extends Model
 
     public function tags(){
         return $this->belongsToMany('App\Tag');
+    }
+    public function deleteMedia($post){
+        $oldFileName=storage_path('app/images/posts/'.$post->image);
+        //Storage::delete($oldFileName);
+        File::delete($oldFileName);
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','| Create Event')
+@section('title','| Edit Event')
 
 @section('styles')
     {!! Html::style('assets/css/datedropper.css') !!}
@@ -11,19 +11,18 @@
 
 @endsection
 
+
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h1>Edit Events</h1>
-                <a href="{{route('events.index')}}">Show</a>
                 <hr>
             </div>
         </div>
         <div class="row">
-
-            <div class="col-md-8 col-md-offset-2">
-                {!! Form::model($event,['route'=>['events.update',$event->id],'method'=>'PUT']) !!}
+            {!! Form::model($event,['route'=>['events.update',$event->id],'files'=>true,'method'=>'PUT']) !!}
+            <div class="col-md-4">
                 {{Form::label('name','Event Title:')}}
                 {{Form::text('name',null,array('class'=>'form-control'))}}
 
@@ -31,18 +30,28 @@
                 {{ Form::label('date','Event Date:') }}
                 {{Form::date('date',null,['class'=>'form-control'])}}
 
+                {{Form::label('featured_image','Upload Featured Image')}}
+                {{Form::file('featured_image',['class'=>'form-control'])}}
+
+            </div>
+            <div class="col-md-4">
                 {{ Form::label('time','Event Time:') }}
                 <input type="text" class="form-control timepicker" name="time">
 
-                {{Form::label('venue','Venue')}}
-                {{Form::text('venue',null,['class'=>'form-control'])}}
+                {{Form::label('venue_id','Venue:')}}
+                {{Form::select('venue_id',$venues,null,['class'=>'form-control'])}}
+
+
+
+
+            </div>
+            <div class="col-md-4">
                 {{Form::label('type','Event Type')}}
                 <select class="form-control" name="type" id="mylist" value="{{$event->type}}">
                     <option value="weekly" @if($event->type == 'weekly') selected @endif>Weekly</option>
                     <option value="monthly" @if($event->type == 'monthly') selected @endif>Monthly</option>
                     <option value="special" @if($event->type == 'special') selected @endif>Special</option>
                 </select>
-
 
                 {{Form::label('day','Event Day')}}
                 <select class="form-control" name="day" value="{{$event->day}}">
@@ -54,17 +63,21 @@
                     <option value="friday" @if($event->day == 'friday') selected @endif>Friday</option>
                     <option value="saturday" @if($event->day == 'saturday') selected @endif>Saturday</option>
                 </select>
-
+            </div>
+            <div class="col-md-12">
                 {{Form::label('description','Event Description:')}}
                 {{Form::textarea('description',null,array('class'=>'form-control'))}}
 
-                {{Form::submit('Update Event',array('class'=>'btn btn-success btn-lg btn-block','style'=>'margin-top:20px'))}}
+                {{Form::submit('Update Event',array('class'=>'btn btn-success btn-block','style'=>'margin-top:20px'))}}
 
-                {!! Form::close() !!}
             </div>
+
+            {!! Form::close() !!}
+
         </div>
 
     </div>
+
 
 @endsection
 

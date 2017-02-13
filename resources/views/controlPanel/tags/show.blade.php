@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','| Create Tags')
+@section('title','| '.$tag->name)
 
 @section('styles')
     {!! Html::style('assets/css/select2.min.css') !!}
@@ -10,17 +10,17 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>{{$tag->name}}</h1>
+                <h1>{{$tag->name}} Tag</h1>
                 <hr>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h3>{{$tag->posts->count()}} are Associated Posts</h3>
+                <h3>{{$tag->posts->count()}} Tags are Associated Posts</h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
@@ -53,14 +53,7 @@
                     </table>
                 </div>
             </div>
-            <div class="col-md-4">
-                {!! Form::open(['route'=>'tags.store','method'=>'POST']) !!}
-                {{Form::label('tags','Tags')}}
-                <select class="form-control select2-multi" name="tags[]" multiple="multiple">
-                </select>
-                {{Form::submit('Create Tags',['class'=>'btn btn-success btn-block','style'=>'margin-top:20px;'])}}
-                {!! Form::close() !!}
-            </div>
+
         </div>
     </div>
 @stop

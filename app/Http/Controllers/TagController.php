@@ -8,6 +8,12 @@ use League\Flysystem\Exception;
 
 class TagController extends Controller
 {
+    public function __construct()
+    {
+
+        $this->middleware('auth');
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -46,7 +52,7 @@ class TagController extends Controller
             $tag_new->save();
         }
         }catch (\Exception $e){
-            $request->session()->flash('success',json_encode($request->tags).' contains duplicates');
+            $request->session()->flash('failure',json_encode($request->tags).' contains duplicates');
             return redirect()->route('tags.create');
         }
         $request->session()->flash('success',json_encode($request->tags).'are created successfully');
@@ -114,9 +120,10 @@ class TagController extends Controller
     public function destroy(Request $request,$id)
     {
         $tag=Tag::find($id);
+        $tagName=$tag->name;
         $tag->posts()->detach();
         $tag->delete();
-        $request->session()->flash('success','Tag Deleted successfully');
+        $request->session()->flash('success',$tagName.' Tag Deleted successfully');
         return redirect()->route('tags.create');
     }
 }

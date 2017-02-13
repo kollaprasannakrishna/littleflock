@@ -40,7 +40,10 @@
                                 <td><a href="{{route('admin.edit',$user->id)}}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                 <td><a href="#" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a></td>
                                 <td>
-                                    <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a></td>
+                                    {!! Form::open(['route'=>['admin.destroy',$user->id],'method'=>'DELETE']) !!}
+                                    {{Form::submit('Delete',['class'=>'btn btn-danger btn-xs'])}}
+                                    {!! Form::close() !!}
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

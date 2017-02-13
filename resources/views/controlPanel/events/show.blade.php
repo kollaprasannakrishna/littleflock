@@ -35,7 +35,7 @@
                                 <td>{{$event->description}}</td>
                                 <td>{{$event->date}}</td>
                                 <td>{{$event->time}}</td>
-                                <td>{{$event->venue}}</td>
+                                <td>{{$event->venue->name}}</td>
                                 <td>{{$event->day}}</td>
                                 <td>{{$event->type}}</td>
                                 <td>{{$event->user->name}}</td>

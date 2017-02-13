@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Series;
+use App\Sermon;
 use Illuminate\Http\Request;
 
 class SeriesController extends Controller
 {
+    public function __construct()
+    {
+
+        $this->middleware('auth');
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -44,6 +51,8 @@ class SeriesController extends Controller
         $series->name=$request->name;
 
         $series->save();
+
+        \Storage::makeDirectory('sermons/'.$request->name);
 
         $request->session()->flash('success','Series created Succesfully');
 
@@ -87,9 +96,13 @@ class SeriesController extends Controller
             'name'=>'required|max:100'
         ]);
         $series=Series::find($id);
+        $oldSeriesName=$series->name;
         $series->name=$request->name;
 
         $series->save();
+        $oldpath=storage_path('app/sermons/'.$oldSeriesName);
+        $newpath=storage_path('app/sermons/'.$request->name);
+        rename($oldpath,$newpath);
 
         $request->session()->flash('success','Series created Succesfully');
 
@@ -102,8 +115,25 @@ class SeriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+        $series=Series::find($id);
+        if($series->id == 4) {
+            $request->session()->flash('failure',$series->name.' Series Can\'t be  deleted');
+            return redirect()->route('series.create');
+        }
+        foreach ($series->sermons as $sermon) {
+            $sermon = Sermon::find($sermon->id);
+            $sermon->series_id = 4;
+            $sermon->save();
+        }
+        $series->delete();
+        $request->session()->flash('success',$series->name.' Series Deleted SuccessFully');
+        return redirect()->route('series.create');
+    }
+    public function getDelete($id){
+        $series=Series::find($id);
+
+        return view('controlPanel.series.delete')->with('series',$series);
     }
 }

@@ -45,4 +45,37 @@ class Event extends Model
             new DateTime("last day of $y-$m")
         );
     }
+    public function getMonthly($y,$m,$day, $event){
+        $breakMontlyArr=explode(',',$event->monthsDay);
+        $x=0;
+        $allMontlyDays=array();
+
+        foreach ($this->getMonthlyDays($y,$m,$day) as $daysInMonth){
+            $allMontlyDays[$x]=$daysInMonth->format("Y-m-d");
+            $x++;
+        }
+        //dd($allMontlyDays);
+        $onlyDays=array();
+        for($z=0;$z<count($breakMontlyArr);$z++) {
+            $onlyDays[$z] =$allMontlyDays[$breakMontlyArr[$z]-1] ;
+        }
+
+
+        $copyArr=$onlyDays;
+
+        //dd($copyArr);
+        for($c=0;$c<count($copyArr);$c++){
+            if($onlyDays[$c]< date("Y-m-d H:i:s")){
+
+                array_splice($copyArr,$c);
+
+
+            }
+        }
+        return $copyArr;
+
+    }
+    public function venue(){
+        return $this->belongsTo('App\Venue');
+    }
 }

@@ -54,4 +54,9 @@ class PagesController extends Controller
     public function getBlog(){
         return view('blog.blog');
     }
+
+    public function getSingleEvent($event){
+
+        return view('events.singleEvent');
+    }
 }

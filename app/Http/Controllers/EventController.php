@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Venue;
 use Illuminate\Http\Request;
+use Image;
+use File;
 
 class EventController extends Controller
 {
+    public function __construct()
+    {
+
+        $this->middleware('auth');
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -52,34 +61,19 @@ class EventController extends Controller
                     $event->save();
                 }
             }elseif ($event->type == 'monthly'){
-                $breakMontlyArr=explode(',',$event->monthsDay);
-                $x=0;
-                $allMontlyDays=array();
-                foreach ($eventModel->getMonthlyDays($y,$m,$event->day) as $daysInMonth){
-                    $allMontlyDays[$x]=$daysInMonth->format("Y-m-d");
-                    $x++;
-                }
-                $onlyDays=array();
-                for($z=0;$z<count($breakMontlyArr);$z++) {
-                    $onlyDays[$z] =$allMontlyDays[$breakMontlyArr[$z]-1] ;
-                    }
 
+                $result_dates=array();
+                $result_dates=$eventModel->getMonthly($y,$m,$event->day,$event);
 
-                $copyArr=new \ArrayObject($onlyDays);
+               // dd($result_dates);
+                if(empty($result_dates)){
+                    $monthInc=$m+1;
+                    $result_dates=$eventModel->getMonthly($y,$monthInc,$event->day,$event);
 
-                for($c=0;$c<count($copyArr);$c++){
-                    if($onlyDays[$c]< date("Y-m-d H:i:s")){
-                        unset($onlyDays[$c]);
-                    }
-                }
-
-
-
-                if($event->date == reset($onlyDays)){
-
-
+                    $event->date=$result_dates[0];
+                    $event->save();
                 }else{
-                    $event->date=reset($onlyDays);
+                    $event->date=$result_dates[0];
                     $event->save();
                 }
 
@@ -93,7 +87,8 @@ class EventController extends Controller
                 }
             }
         }
-        return view('controlPanel.events.create')->with('events',$events);
+        $venues=Venue::all();
+        return view('controlPanel.events.create')->with('events',$events)->with('venues',$venues);
     }
 
     /**
@@ -107,13 +102,14 @@ class EventController extends Controller
 
 
         $this->validate($request,array(
-            'title'=>'required|max:255',
+            'name'=>'required|max:255',
             'date'=>'required|date',
             'time'=>'Required',
-            'venue'=>'Required',
+            'venue_id'=>'Required',
             'type'=>'Required',
             'day'=>'required',
-            'description'=>'Required'
+            'description'=>'Required',
+            'feature_image'=>'sometimes|image'
         ));
         $DateconvertToPHP=str_replace('/','-',$request->date);
 
@@ -128,13 +124,21 @@ class EventController extends Controller
             $str = implode(",", $request->monthsDay);
             $event->monthsDay=$str;
         }
+        if($request->hasFile('featured_image')){
 
+            $image=$request->file('featured_image');
+            $filename=time().".".$image->getClientOriginalExtension();
+            $location=storage_path('app/images/events/'.$filename);
+            Image::make($image)->resize(400,400)->save($location);
+
+            $event->image=$filename;
+        }
         $event->active="YES";
 
-        $event->name=$request->title;
+        $event->name=$request->name;
         $event->date=$mysqlDate;
         $event->time=$mysqlTime;
-        $event->venue=$request->venue;
+        $event->venue_id=$request->venue_id;
         $event->type=$request->type;
         $event->day=$request->day;
         $event->description=$request->description;
@@ -170,8 +174,12 @@ class EventController extends Controller
     public function edit($id)
     {
         $event=Event::find($id);
-
-        return view('controlPanel.events.edit')->with('event',$event);
+        $venues=Venue::all();
+        $ven=array();
+        foreach ($venues as $venue){
+            $ven[$venue->id]=$venue->name;
+        }
+        return view('controlPanel.events.edit')->with('event',$event)->with('venues',$ven);
     }
 
     /**
@@ -184,10 +192,10 @@ class EventController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,array(
-            'title'=>'required|max:255',
+            'name'=>'required|max:255',
             'date'=>'required|date',
             'time'=>'Required',
-            'venue'=>'Required',
+            'venue_id'=>'Required',
             'type'=>'Required',
             'day'=>'required',
             'description'=>'Required'
@@ -205,11 +213,24 @@ class EventController extends Controller
             $str = implode(",", $request->monthsDay);
             $event->monthsDay=$str;
         }
+
+        if($request->hasFile('featured_image')){
+            $image=$request->file('featured_image');
+            $filename=time().".".$image->getClientOriginalExtension();
+            $location=storage_path('app/images/events/'.$filename);
+            Image::make($image)->resize(800,400)->save($location);
+            $oldFileName=storage_path('app/images/events/'.$event->image);
+
+            $event->image=$filename;
+
+            //Storage::delete($oldFileName);
+            File::delete($oldFileName);
+        }
         $event->active="YES";
-        $event->name=$request->title;
+        $event->name=$request->name;
         $event->date=$mysqlDate;
         $event->time=$mysqlTime;
-        $event->venue=$request->venue;
+        $event->venue_id=$request->venue_id;
         $event->type=$request->type;
         $event->day=$request->day;
         $event->description=$request->description;
@@ -241,7 +262,6 @@ class EventController extends Controller
     }
     public function getDelete($id){
         $event=Event::find($id);
-
         return view('controlPanel.events.delete')->with('event',$event);
     }
 

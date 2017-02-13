@@ -9,4 +9,7 @@ class Group extends Model
     public function members(){
         return $this->belongsToMany('App\Member');
     }
+    public function emails(){
+        return $this->belongsToMany('App\Email');
+    }
 }

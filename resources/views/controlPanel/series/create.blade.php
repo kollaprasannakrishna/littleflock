@@ -30,11 +30,9 @@
                                 <td>{{$series->name}}</td>
                                 <td><a href="{{route('series.edit',$series->id)}}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                 <td><a href="{{route('series.show',$series->id)}}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a></td>
-                                <td>{!! Form::open(['route'=>['series.destroy',$series->id],'method'=>'DELETE']) !!}
-                                    {{Form::submit('Delete',['class'=>'btn btn-danger btn-xs'])}}
-                                    {!! Form::close() !!}
+                                <td>
 
-                                    {{--<a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>--}}</td>
+                                    <a href="{{route('series.delete',$series->id)}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a></td>
                             </tr>
                             @endforeach
                         </tbody>

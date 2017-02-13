@@ -22,6 +22,7 @@
                             <th>Body</th>
                             <th>Author</th>
                             <th>Series</th>
+                            <th>image</th>
                             <th>Edit</th>
                             <th>View</th>
                             <th>Delete</th>
@@ -35,10 +36,11 @@
                                 <td>{{$sermon->speaker}}</td>
                                 <td>{{$sermon->venue->name}}</td>
                                 <td>{{$sermon->series->name}}</td>
+                                <td>{{$sermon->featured_image}}</td>
                                 <td><a href="{{route('sermons.edit',$sermon->id)}}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                 <td><a href="{{route('sermons.show',$sermon->id )}}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a></td>
                                 <td>
-                                    <a href="{{route('sermons.destroy',$sermon->id)}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a></td>
+                                    <a href="{{route('sermons.delete',$sermon->id)}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a></td>
                             </tr>
                         @endforeach
                         </tbody>

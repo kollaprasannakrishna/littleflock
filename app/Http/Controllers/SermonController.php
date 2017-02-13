@@ -8,9 +8,16 @@ use App\Venue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use File;
 
 class SermonController extends Controller
 {
+    public function __construct()
+    {
+
+        $this->middleware('auth');
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -51,24 +58,34 @@ class SermonController extends Controller
             'series_id'=>'required'
         ]);
         $sermon=new Sermon();
+        $series=Series::find($request->series_id);
         $sermon->title=$request->title;
         $sermon->speaker=$request->speaker;
         $sermon->venue_id=$request->venue_id;
         $sermon->date=$request->date;
         $sermon->description=$request->description;
-        if(hasValue($request->videolink)){
-            $sermon->audiolink=$request->audiolink;
-        }
+
         if(hasValue($request->videolink)){
             $sermon->videolink=$request->videolink;
         }
         if($request->hasFile('featured_image')){
             $file=$request->file('featured_image');
             $filename=time().".".$file->getClientOriginalExtension();
-            $location=storage_path('app/images/sermons/'.$filename);
+            $location=storage_path('app/sermons/'.$series->name."/".$filename);
             Image::make($file)->resize(800,400)->save($location);
 
             $sermon->featured_image=$filename;
+        }
+        if($request->hasFile('audio_file')){
+            $audiofile=$request->file('audio_file');
+            $audiofilename=$request->title."_"."series".$request->date."_".time().".".$audiofile->getClientOriginalExtension();
+            $audiolocation=storage_path('app/sermons/'.$series->name."/");
+
+
+            $request->file('audio_file')->move($audiolocation, $audiofilename);
+
+            //$request->file('audio_file')->storeAs($location, $filename);
+            $sermon->audiolink=$audiofilename;
         }
         $sermon->series_id=$request->series_id;
 
@@ -136,36 +153,53 @@ class SermonController extends Controller
             'series_id'=>'required'
         ]);
         $sermon=Sermon::find($id);
+        $series=Series::find($request->series_id);
         $sermon->title=$request->title;
         $sermon->speaker=$request->speaker;
         $sermon->venue_id=$request->venue_id;
         $sermon->date=$request->date;
         $sermon->description=$request->description;
-        if(hasValue($request->videolink)){
-            $sermon->audiolink=$request->audiolink;
-        }
+
         if(hasValue($request->videolink)){
             $sermon->videolink=$request->videolink;
         }
         if($request->hasFile('featured_image')){
             $file=$request->file('featured_image');
             $filename=time().".".$file->getClientOriginalExtension();
-            $location=storage_path('app/images/sermons/'.$filename);
+            $location=storage_path('app/sermons/'.$series->name."/".$filename);
             Image::make($file)->resize(800,400)->save($location);
             $oldFileName=$sermon->featured_image;
            //dd($oldFileName);
             $sermon->featured_image=$filename;
             if($oldFileName != null) {
-                Storage::delete('images/sermons/' . $oldFileName);
+                Storage::delete('sermons/'.$series->name."/" . $oldFileName);
             }
 
 
+
+        }
+        if($request->hasFile('audio_file')){
+            $audiofile=$request->file('audio_file');
+            $audiofilename=$request->title."_"."series".$request->date."_".time().".".$audiofile->getClientOriginalExtension();
+            $audiolocation=storage_path('app/sermons/'.$series->name."/");
+
+            $oldaudiofile=$sermon->audiolink;
+
+            $request->file('audio_file')->move($audiolocation, $audiofilename);
+
+            //$request->file('audio_file')->storeAs($location, $filename);
+            $sermon->audiolink=$audiofilename;
+            if($oldaudiofile != null) {
+                Storage::delete('sermons/'.$series->name."/".$oldaudiofile);
+
+            }
+//            File::delete($audiolocation.$oldaudiofile);
         }
         $sermon->series_id=$request->series_id;
 
         $sermon->save();
 
-        $request->session()->flash('success','Sermon addes Success Fully');
+        $request->session()->flash('success','Sermon Updated Successfully');
 
         return redirect()->route('sermons.index');
     }
@@ -176,8 +210,27 @@ class SermonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,Request $request)
     {
-        //
+        $sermon=Sermon::find($id);
+        $series=Series::find($sermon->series_id);
+        $oldFileName=$sermon->featured_image;
+        $oldSermonaudio=$sermon->audiolink;
+        if($oldFileName != null) {
+            Storage::delete('sermons/'.$series->name."/" . $oldFileName);
+            Storage::delete('sermons/'.$series->name."/" . $oldSermonaudio);
+        }
+
+        $sermon->delete();
+
+        $request->session()->flash('success','The sermon deleted successfully');
+
+        return redirect()->route('sermons.index');
+    }
+
+    public function getDelete($id){
+        $sermon=Sermon::find($id);
+
+        return view('controlPanel.sermons.delete')->with('sermon',$sermon);
     }
 }

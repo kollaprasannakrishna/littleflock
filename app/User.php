@@ -57,4 +57,19 @@ class User extends Authenticatable
             return true;
         }
     }
+
+    public function emails(){
+        return $this->hasMany('App\Email');
+    }
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function deleteAll(){
+        foreach ($this->posts() as $post){
+            $post->tags()->detach();
+        }
+        $this->posts()->delete();
+    }
 }

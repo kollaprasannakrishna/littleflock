@@ -42,8 +42,13 @@
 
                     <li><a href="{{ route('venue.create') }}">Address & Contact</a></li>
                     <li><a href="{{route('admin.index')}}">Admin</a></li>
-                    <li><a href="{{route('emails.create')}}">Emails</a></li>
-                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Messages <span class="caret"></span></a>
+                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Emails <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{route('emails.create')}}">Creat Emails</a></li>
+                            <li><a href="{{route('emails.index')}}">All Emails</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Memmbers <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ route('members.create') }}">Member Signup</a></li>
                             <li><a href="{{ route('positions.create') }}">Create Position</a></li>

@@ -18,36 +18,18 @@
                     </div>
                     <div class="container listing-cont">
                         <ul>
-                            <li class="item event-item">
-                                <div class="event-date"> <span class="date">01</span> <span class="month">Jan</span> </div>
-                                <div class="event-detail">
-                                    <h4><a href="#">Sunday Service</a></h4>
-                                    <span class="event-dayntime meta-data">Sunday | 10:30 AM</span>
-                                </div>
-                                <div class="to-event-url">
-                                    <div><a href="#" class="btn btn-default btn-sm">Details</a></div>
-                                </div>
-                            </li>
-                            <li class="item event-item">
-                                <div class="event-date"> <span class="date">01</span> <span class="month">Jan</span> </div>
-                                <div class="event-detail">
-                                    <h4><a href="#">Evening Bible Fellowship</a></h4>
-                                    <span class="event-dayntime meta-data">Sunday | 05:00 PM</span>
-                                </div>
-                                <div class="to-event-url">
-                                    <div><a href="#" class="btn btn-default btn-sm">Details</a></div>
-                                </div>
-                            </li>
-                            <li class="item event-item">
-                                <div class="event-date"> <span class="date">04</span> <span class="month">Jan</span> </div>
-                                <div class="event-detail">
-                                    <h4><a href="#">Mid-Week Prayer Meeting</a></h4>
-                                    <span class="event-dayntime meta-data">Wednesday | 07:00 PM</span>
-                                </div>
-                                <div class="to-event-url">
-                                    <div><a href="#" class="btn btn-default btn-sm">Details</a></div>
-                                </div>
-                            </li>
+                            @foreach($events as $event)
+                                <li class="item event-item">
+                                    <div class="event-date"> <span class="date">{{date('d',strtotime($event->date) )}}</span> <span class="month">{{date('M',strtotime($event->date))}}</span> </div>
+                                    <div class="event-detail">
+                                        <h4><a href="#">{{$event->name}}</a></h4>
+                                        <span class="event-dayntime meta-data">{{$event->day}} | {{$event->time}}</span>
+                                    </div>
+                                    <div class="to-event-url">
+                                        <div><a href="#" class="btn btn-default btn-sm">Details</a></div>
+                                    </div>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

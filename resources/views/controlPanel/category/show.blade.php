@@ -12,11 +12,11 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h3>{{$category->posts->count()}} are Associated Posts</h3>
+                <h3>{{$category->posts->count()}} Posts are Associated Posts</h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
@@ -48,13 +48,6 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div class="col-md-4">
-                {!! Form::open(['route'=>'categories.store','method'=>'POST']) !!}
-                {{Form::label('name','Category Name')}}
-                {{Form::text('name',null,['class'=>'form-control'])}}
-                {{Form::submit('Create new',['class'=>'btn btn-success btn-block','style'=>'margin-top:20px;'])}}
-                {!! Form::close() !!}
             </div>
         </div>
     </div>

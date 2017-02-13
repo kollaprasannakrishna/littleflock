@@ -51,6 +51,8 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
+
         $this->validate($request,array(
             'title'=>'required|max:255',
             'body'=>'required|min:10',
@@ -67,14 +69,18 @@ class PostController extends Controller
         $post->slug=$request->slug;
         $post->category_id=$request->category_id;
         if($request->hasFile('featured_image')){
+
             $image=$request->file('featured_image');
-            Log::info($image);
-            $filename=time().'.'.$image->getClientOriginalExtension();
-            $location=public_path('blogImage/'.$filename);
-
-            //$audioLocation=public_path('blogImage');
-
+            $filename=time().".".$image->getClientOriginalExtension();
+            $location=storage_path('app/images/posts/'.$filename);
             Image::make($image)->resize(800,400)->save($location);
+
+//            $filename=time().'.'.$image->getClientOriginalExtension();
+//            $location=public_path('blogImage/'.$filename);
+//
+//            //$audioLocation=public_path('blogImage');
+//
+//            Image::make($image)->resize(800,400)->save($location);
             //$image->move($audioLocation,$filename);
             $post->image=$filename;
         }
@@ -90,6 +96,7 @@ class PostController extends Controller
         $request->session()->flash('success','Post create Sucessfully');
 
         return redirect()->route('posts.show',$post->id);
+       // return response()->json($post);
     }
 
     /**
@@ -158,18 +165,24 @@ class PostController extends Controller
             $post->slug=$request->slug;
         }
         if($request->hasFile('featured_image')){
+//            $image=$request->file('featured_image');
+//            $filename=time().'.'.$image->getClientOriginalExtension();
+//
+//            $location=public_path('blogImage/'.$filename);
+//
+//            Image::make($image)->resize(800,400)->save($location);
+
+
             $image=$request->file('featured_image');
-            $filename=time().'.'.$image->getClientOriginalExtension();
-
-            $location=public_path('blogImage/'.$filename);
-
+            $filename=time().".".$image->getClientOriginalExtension();
+            $location=storage_path('app/images/posts/'.$filename);
             Image::make($image)->resize(800,400)->save($location);
-
-            $oldFileName=$post->image;
+            $oldFileName=storage_path('app/images/posts/'.$post->image);
 
             $post->image=$filename;
 
-            File::delete('blogImage/'.$oldFileName);
+            //Storage::delete($oldFileName);
+            File::delete($oldFileName);
         }
 
         $post->title=$request->title;
