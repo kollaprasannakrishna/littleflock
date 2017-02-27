@@ -36,5 +36,20 @@ class Run_all_roles_seeder extends Seeder
         $role_user4->name="Email";
         $role_user4->description="Email Access";
         $role_user4->save();
+
+        $role_user5=new Role();
+        $role_user5->name="Admin";
+        $role_user5->description="Administrator Access";
+        $role_user5->save();
+
+        $role_user6=new Role();
+        $role_user6->name="member";
+        $role_user6->description="Church Member";
+        $role_user6->save();
+
+        $role_user7=new Role();
+        $role_user7->name="Visitor";
+        $role_user7->description="Occational Visitor";
+        $role_user7->save();
     }
 }

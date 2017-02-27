@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-sm-6 col-xs-8 add-margin-10">
-                <h1 class="logo"> <a href="index.html"><img src="assets/images/logo/little_logo_2.png" class="img-responsive" alt="Logo"></a> </h1>
+                <h1 class="logo"> <a href="index.html"><img src="{{asset('assets/images/logo/little_logo_2.png')}}" class="img-responsive" alt="Logo"></a> </h1>
             </div>
             <div class="col-md-8 col-sm-6 col-xs-4">
                 <ul class="top-navigation hidden-sm hidden-xs">

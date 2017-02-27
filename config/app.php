@@ -165,6 +165,9 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Anchu\Ftp\FtpServiceProvider::class,
+        GrahamCampbell\Flysystem\FlysystemServiceProvider::class,
+
 
         /*
          * Package Service Providers...
@@ -180,6 +183,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\ViewComposerServiceProvider::class,
 
     ],
 
@@ -232,6 +236,8 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Excel'=>Maatwebsite\Excel\ExcelServiceProvider::class,
+        'Ftp'=>Anchu\Ftp\FtpServiceProvider::class,
+        'Flysystem' => GrahamCampbell\Flysystem\Facades\Flysystem::class,
     ],
 
 ];

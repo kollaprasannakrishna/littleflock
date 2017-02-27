@@ -19,7 +19,7 @@ class Post extends Model
         return $this->belongsToMany('App\Tag');
     }
     public function deleteMedia($post){
-        $oldFileName=storage_path('app/images/posts/'.$post->image);
+        $oldFileName=public_path('images/posts/'.$post->image);
         //Storage::delete($oldFileName);
         File::delete($oldFileName);
     }

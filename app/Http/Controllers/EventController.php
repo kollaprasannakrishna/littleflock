@@ -24,19 +24,8 @@ class EventController extends Controller
     public function index()
     {
 
-        $event=new Event();
-
-        $nextSun=$event->getNextSunday();
-
-        $y=date('Y');
-        $m=date('m');
-        $arr=array();
-        $i=0;
-        foreach ($event->getWednesdays($y,$m) as $wednesday){
-            $arr[$i]=$wednesday->format("Y-m-d\n");
-            $i++;
-        }
-        return view('controlPanel.events.index')->with('arr',$arr)->with('nextSun',$nextSun);
+       $events=Event::orderBy('date','desc')->paginate(10);
+        return view('controlPanel.events.index')->with('events',$events);
 
     }
 
@@ -47,6 +36,8 @@ class EventController extends Controller
      */
     public function create()
     {
+        date_default_timezone_set("America/New_York");
+        //dd(date("Y-m-d H:i:s"));
         $y=date('Y');
         $m=date('m');
         $eventModel=new Event();
@@ -78,7 +69,8 @@ class EventController extends Controller
                 }
 
             }else if($event->type == 'special'){
-                if($event->date < date("Y-m-d H:i:s")){
+                if($event->date <= date("Y-m-d H:i:s")){
+                    //dd(date("Y-m-d H:i:s"));
                  $event->active="NO";
                     $event->save();
                 }else{
@@ -127,8 +119,11 @@ class EventController extends Controller
         if($request->hasFile('featured_image')){
 
             $image=$request->file('featured_image');
-            $filename=time().".".$image->getClientOriginalExtension();
-            $location=storage_path('app/images/events/'.$filename);
+            $filename=$request->name.time().".".$image->getClientOriginalExtension();
+            $directory='images/events/';
+            File::makeDirectory($directory, $mode = 0777, true, true);
+            $location=public_path('images/events/'.$filename);
+
             Image::make($image)->resize(400,400)->save($location);
 
             $event->image=$filename;
@@ -216,10 +211,10 @@ class EventController extends Controller
 
         if($request->hasFile('featured_image')){
             $image=$request->file('featured_image');
-            $filename=time().".".$image->getClientOriginalExtension();
-            $location=storage_path('app/images/events/'.$filename);
-            Image::make($image)->resize(800,400)->save($location);
-            $oldFileName=storage_path('app/images/events/'.$event->image);
+            $filename=$request->name.time().".".$image->getClientOriginalExtension();
+            $location=public_path('images/events/'.$filename);
+            Image::make($image)->resize(400,400)->save($location);
+            $oldFileName=public_path('images/events/'.$event->image);
 
             $event->image=$filename;
 

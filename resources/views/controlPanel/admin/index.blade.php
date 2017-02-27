@@ -7,6 +7,14 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>All Users & Roles</h1>
+
+            </div>
+            <div class="col-md-12">
+                <div class="form-group-lg">
+                    <input type="text" class="form-control" placeholder="Search table" id="search_name">
+                </div>
+            </div>
+            <div class="col-md-12">
                 <hr>
             </div>
         </div>
@@ -14,7 +22,7 @@
 
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover" id="table">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -53,6 +61,27 @@
         </div>
     </div>
     <div class="text-center">
-       Pagination
+       {{$users->links()}}
     </div>
+@endsection
+
+@section('scripts')
+    {!! Html::script('assets/js/paging.js') !!}
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <script>
+        var $rows = $('#table tr');
+        $('#search_name').keyup(function() {
+
+            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+                    reg = RegExp(val, 'i'),
+                    text;
+
+            $rows.show().filter(function() {
+                text = $(this).text().replace(/\s+/g, ' ');
+                return !reg.test(text);
+            }).hide();
+        });
+    </script>
+
+
 @endsection

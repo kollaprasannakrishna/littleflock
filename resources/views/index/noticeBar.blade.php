@@ -5,9 +5,10 @@
         <div class="row">
             <div class="col-md-3 col-sm-6 col-xs-6 notice-bar-title"> <span class="notice-bar-title-icon hidden-xs"><i class="fa fa-calendar fa-3x"></i></span> <span class="title-note">Next</span> <strong>Upcoming Event</strong> </div>
             <div class="col-md-3 col-sm-6 col-xs-6 notice-bar-event-title">
-                <h5><a href="single-event.html">    {{$event->name}} </a></h5>
-                <span class="meta-data">31st December, 2016 : 09:30 PM - 01:00 AM<br> Music Hall, First Presbyterian Church of Farmington Hills<br>
-                26165 Farmington Rd, Farmington Hills, MI 48334</span><br>
+                <h5><a href="{{route('get.event',$event->name)}}">    {{$event->name}} </a></h5>
+                <span class="meta-data">{{date('d',strtotime($event->date) )}} {{date('M',strtotime($event->date))}}, {{date('Y',strtotime($event->date) )}} - {{date('H:i',strtotime($event->time))}}<br>
+                    {{$event->venue->name}}, {{$event->venue->address1}} {{$event->venue->city}} {{$event->venue->state}} - {{$event->venue->zip}}<br>
+                </span><br>
 
             </div>
             <div id="counter" class="col-md-4 col-sm-6 col-xs-12 counter" data-date="{{date('F',strtotime($event->date) )}} {{date('d',strtotime($event->date) )}}, {{date('Y',strtotime($event->date) )}} {{date('H:i',strtotime($event->time))}}">

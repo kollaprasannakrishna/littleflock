@@ -36,11 +36,12 @@
                                             </div>
                                             <div class="col-md-4"> <span class="megamenu-sub-title"><i class="fa fa-clock-o"></i> Upcoming Events</span>
                                                 <ul class="sub-menu">
-                                                    @foreach($events as $event)
+                                                    @foreach($upcomingEvents as $event)
                                                         <li><a href="#">{{$event->name}}</a> <span class="meta-data">{{$event->day}} | {{date('H:i A',strtotime($event->time) )}}</span> </li>
                                                     @endforeach
 
                                                 </ul>
+
                                             </div>
                                         </div>
                                     </div>

@@ -52,7 +52,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
-
+    //dd($request);
         $this->validate($request,array(
             'title'=>'required|max:255',
             'body'=>'required|min:10',
@@ -71,8 +71,11 @@ class PostController extends Controller
         if($request->hasFile('featured_image')){
 
             $image=$request->file('featured_image');
-            $filename=time().".".$image->getClientOriginalExtension();
-            $location=storage_path('app/images/posts/'.$filename);
+            $filename=$request->slug.time().".".$image->getClientOriginalExtension();
+            $directory='images/posts/';
+            File::makeDirectory($directory, $mode = 0777, true, true);
+            $location=public_path('images/posts/'.$filename);
+
             Image::make($image)->resize(800,400)->save($location);
 
 //            $filename=time().'.'.$image->getClientOriginalExtension();
@@ -84,6 +87,7 @@ class PostController extends Controller
             //$image->move($audioLocation,$filename);
             $post->image=$filename;
         }
+        $post->status=$request->save;
 
         $request->user()->posts()->save($post);
 
@@ -143,6 +147,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $post=Post::find($id);
 
         $old_slug=$post->slug;
@@ -174,17 +179,17 @@ class PostController extends Controller
 
 
             $image=$request->file('featured_image');
-            $filename=time().".".$image->getClientOriginalExtension();
-            $location=storage_path('app/images/posts/'.$filename);
+            $filename=$request->slug.time().".".$image->getClientOriginalExtension();
+            $location=public_path('images/posts/'.$filename);
             Image::make($image)->resize(800,400)->save($location);
-            $oldFileName=storage_path('app/images/posts/'.$post->image);
+            $oldFileName=public_path('images/posts/'.$post->image);
 
             $post->image=$filename;
 
             //Storage::delete($oldFileName);
             File::delete($oldFileName);
         }
-
+        $post->status=$request->save;
         $post->title=$request->title;
         $post->body=$request->body;
 

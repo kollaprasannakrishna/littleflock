@@ -11,6 +11,8 @@ use Image;
 use File;
 use Validator;
 use Illuminate\Support\Facades\Storage;
+use GrahamCampbell\Flysystem\Facades\Flysystem;
+
 
 class FileUploadController extends Controller
 {
@@ -42,13 +44,18 @@ class FileUploadController extends Controller
 //
 //        return response()->json(['error'=>$validator->errors()->all()]);
 //        }
-        $file=$request->file('featured_image1');
-        $filename=time().".".$file->getClientOriginalExtension();
-        $location=storage_path('app/images/sermons/'.$filename);
-        Image::make($file)->resize(800,400)->save($location);
-//        if($file){
-//            Storage::disk('local')->put('blogs/'.$filename,File::get($file));
-//        }
+        if($request->hasFile('featured_image1')){
+            $image=$request->file('featured_image1');
+            $filename='new_audio' . '.'.$image->getClientOriginalExtension();
+            $location=public_path('images/hello');
+            File::makeDirectory($location, $mode = 0777, true, true);
+            //dd($location);
+
+            $request->file('featured_image1')->move($location, $filename);
+            //Image::make($image)->resize(800,400)->save($location);
+
+
+        }
         return redirect()->back();
     }
 

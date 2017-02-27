@@ -56,13 +56,13 @@
 
                 {{Form::label('day','Event Day')}}
                 <select class="form-control" name="day">
-                    <option value="sunday">Sunday</option>
-                    <option value="monday">Monday</option>
-                    <option value="tuesday">Tuesday</option>
-                    <option value="wednesday">Wednesday</option>
-                    <option value="thursday">Thursday</option>
-                    <option value="friday">Friday</option>
-                    <option value="saturday">Saturday</option>
+                    <option value="Sunday">Sunday</option>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
                 </select>
 
             </div>
@@ -76,46 +76,7 @@
             </div>
 
             {!! Form::close() !!}
-                <div class="col-md-12">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Data</th>
-                                <th>Time</th>
-                                <th>Venue</th>
-                                <th>Day</th>
-                                <th>Type</th>
-                                <th>Author</th>
 
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($events as $event)
-                            <tr class="{{$event->active =='YES'?'success    ':'danger'}}">
-                                <td>{{$event->id}}</td>
-                                <td>{{$event->name}}</td>
-                                <td>{{$event->description}}</td>
-                                <td>{{$event->date}}</td>
-                                <td>{{$event->time}}</td>
-                                <td>{{$event->venue->name }}</td>
-                                <td>{{$event->day}}</td>
-                                <td>{{$event->type}}</td>
-                                <td>{{$event->user->name}}</td>
-                                <td><a href="{{route('events.edit',$event->id)}}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                                <td><a href="{{route('events.show',$event->id)}}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a></td>
-                                <td>
-                                    <a href="{{route('events.delete',$event->id)}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a></td>
-                            </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             <div class="col-md-4">
 
 
@@ -158,6 +119,29 @@
 
 
 
+    </script>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>
+
+        tinymce.init({
+            selector: 'textarea',
+            height: 140,
+            theme: 'modern',
+            plugins: [
+                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+            ],
+            toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+            image_advtab: true,
+            imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
+            content_css: [
+                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                '//www.tinymce.com/css/codepen.min.css'
+            ]
+        });
     </script>
 
 

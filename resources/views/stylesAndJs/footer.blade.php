@@ -1,4 +1,17 @@
-<script src="assets/js/jquery-2.0.0.min.js"></script> <!-- Jquery Library Call -->
+{!! Html::script('assets/js/jquery-2.0.0.min.js') !!}
+{!! Html::script('assets/plugins/prettyphoto/js/prettyphoto.js') !!}
+{!! Html::script('assets/js/helper-plugins.js') !!}
+{!! Html::script('assets/js/bootstrap.js') !!}
+{!! Html::script('assets/js/waypoints.js') !!}
+{!! Html::script('assets/plugins/mediaelement/mediaelement-and-player.min.js') !!}
+{!! Html::script('assets/js/init.js') !!}
+{!! Html::script('assets/plugins/flexslider/js/jquery.flexslider.js') !!}
+{!! Html::script('assets/plugins/countdown/js/jquery.countdown.min.js') !!}
+{!! Html::script('plugins/nivoslider/jquery.nivo.slider.js') !!}
+{!! Html::script('assets/plugins/rs-plugin/js/jquery.themepunch.tools.min.js') !!}
+{!! Html::script('assets/plugins/rs-plugin/js/jquery.themepunch.revolution.min.js') !!}
+
+{{--<script src="assets/js/jquery-2.0.0.min.js"></script> <!-- Jquery Library Call -->
 <script src="assets/plugins/prettyphoto/js/prettyphoto.js"></script> <!-- PrettyPhoto Plugin -->
 <script src="assets/js/helper-plugins.js"></script> <!-- Plugins -->
 <script src="assets/js/bootstrap.js"></script> <!-- UI -->
@@ -17,7 +30,7 @@
 
 <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
 <script type="text/javascript" src="assets/plugins/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-<script type="text/javascript" src="assets/plugins/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+<script type="text/javascript" src="assets/plugins/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>--}}
 <script type="text/javascript">
     jQuery(document).ready(function() {
         jQuery('.tp-banner').show().revolution(

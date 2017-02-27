@@ -43,7 +43,7 @@
                                 <td>{{$post->id}}</td>
                                 <td>{{$post->title}}</td>
                                 <td>{{substr(strip_tags($post->body),0,5)}}{{strlen($post->body)>5?"....":""}}</td>
-                                <td>{{$post->user->name}}</td>
+                                <td>{{$post->slug}}</td>
                                 <td>{{$post->category->name}}</td>
                                 <td><a href="{{route('posts.edit',$post->id)}}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                 <td><a href="{{route('posts.show',$post->id )}}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a></td>

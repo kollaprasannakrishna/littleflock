@@ -70,8 +70,8 @@ class SermonController extends Controller
         }
         if($request->hasFile('featured_image')){
             $file=$request->file('featured_image');
-            $filename=time().".".$file->getClientOriginalExtension();
-            $location=storage_path('app/sermons/'.$series->name."/".$filename);
+            $filename=$request->title.time().".".$file->getClientOriginalExtension();
+            $location=public_path('audio/sermons/'.$series->name."/".$filename);
             Image::make($file)->resize(800,400)->save($location);
 
             $sermon->featured_image=$filename;
@@ -79,7 +79,8 @@ class SermonController extends Controller
         if($request->hasFile('audio_file')){
             $audiofile=$request->file('audio_file');
             $audiofilename=$request->title."_"."series".$request->date."_".time().".".$audiofile->getClientOriginalExtension();
-            $audiolocation=storage_path('app/sermons/'.$series->name."/");
+
+            $audiolocation=public_path('audio/sermons/'.$series->name."/");
 
 
             $request->file('audio_file')->move($audiolocation, $audiofilename);
@@ -165,14 +166,14 @@ class SermonController extends Controller
         }
         if($request->hasFile('featured_image')){
             $file=$request->file('featured_image');
-            $filename=time().".".$file->getClientOriginalExtension();
-            $location=storage_path('app/sermons/'.$series->name."/".$filename);
+            $filename=$request->title.time().".".$file->getClientOriginalExtension();
+            $location=public_path('audio/sermons/'.$series->name."/".$filename);
             Image::make($file)->resize(800,400)->save($location);
             $oldFileName=$sermon->featured_image;
            //dd($oldFileName);
             $sermon->featured_image=$filename;
             if($oldFileName != null) {
-                Storage::delete('sermons/'.$series->name."/" . $oldFileName);
+                File::delete('audio/sermons/'.$series->name."/" .$oldFileName);
             }
 
 
@@ -181,7 +182,7 @@ class SermonController extends Controller
         if($request->hasFile('audio_file')){
             $audiofile=$request->file('audio_file');
             $audiofilename=$request->title."_"."series".$request->date."_".time().".".$audiofile->getClientOriginalExtension();
-            $audiolocation=storage_path('app/sermons/'.$series->name."/");
+            $audiolocation=public_path('audio/sermons/'.$series->name."/");
 
             $oldaudiofile=$sermon->audiolink;
 
@@ -190,7 +191,7 @@ class SermonController extends Controller
             //$request->file('audio_file')->storeAs($location, $filename);
             $sermon->audiolink=$audiofilename;
             if($oldaudiofile != null) {
-                Storage::delete('sermons/'.$series->name."/".$oldaudiofile);
+                File::delete('audio/sermons/'.$series->name."/" .$oldaudiofile);
 
             }
 //            File::delete($audiolocation.$oldaudiofile);
@@ -217,8 +218,8 @@ class SermonController extends Controller
         $oldFileName=$sermon->featured_image;
         $oldSermonaudio=$sermon->audiolink;
         if($oldFileName != null) {
-            Storage::delete('sermons/'.$series->name."/" . $oldFileName);
-            Storage::delete('sermons/'.$series->name."/" . $oldSermonaudio);
+            File::delete('audio/sermons/'.$series->name."/" . $oldFileName);
+            File::delete('audio/sermons/'.$series->name."/" . $oldSermonaudio);
         }
 
         $sermon->delete();

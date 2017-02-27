@@ -31,7 +31,12 @@
                             <li><a href="{{route('tags.create')}}">Create Tags</a></li>
                             </ul>
                     </li>
-                    <li><a href="{{ route('events.create') }}">Events</a></li>
+                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Events<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ route('events.create') }}">Create Event</a></li>
+                            <li><a href="{{ route('events.index') }}">All Events</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Messages <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ route('sermons.create') }}">Create Sermon</a></li>
@@ -48,9 +53,10 @@
                             <li><a href="{{route('emails.index')}}">All Emails</a></li>
                         </ul>
                     </li>
-                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Memmbers <span class="caret"></span></a>
+                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Members <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ route('members.create') }}">Member Signup</a></li>
+                            <li><a href="{{ route('members.index') }}">All Member</a></li>
                             <li><a href="{{ route('positions.create') }}">Create Position</a></li>
                             <li><a href="{{ route('groups.create') }}">Create Groups</a></li>
                         </ul>

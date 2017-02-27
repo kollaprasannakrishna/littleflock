@@ -5,7 +5,7 @@
             <!-- Start Footer Widgets -->
             <div class="col-md-4 col-sm-4 widget footer-widget">
                 <h4 class="footer-widget-title">About our Church</h4>
-                <img src="assets/images/logo/little_logo_2.png" alt="Logo">
+                <img src="{{asset('assets/images/logo/little_logo_2.png')}}" alt="Logo">
                 <div class="spacer-20"></div>
                 <p class="text-justify">Our desire and prayer is that the Lord will continue to lead and enable us to abide under the authority of the Holy Scriptures. Believers from different cultures and nationalities come together to worship, fellowship, and serve the Lord (Acts 2: 41-47; Rev. 5:9). </p>
             </div>

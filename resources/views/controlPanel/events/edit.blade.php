@@ -55,13 +55,13 @@
 
                 {{Form::label('day','Event Day')}}
                 <select class="form-control" name="day" value="{{$event->day}}">
-                    <option value="sunday" @if($event->day == 'sunday') selected @endif>Sunday</option>
-                    <option value="monday" @if($event->day == 'monday') selected @endif>Monday</option>
-                    <option value="tuesday" @if($event->day == 'tuesday') selected @endif>Tuesday</option>
-                    <option value="wednesday" @if($event->day == 'wednesday') selected @endif>Wednesday</option>
-                    <option value="thursday" @if($event->day == 'thursday') selected @endif>Thursday</option>
-                    <option value="friday" @if($event->day == 'friday') selected @endif>Friday</option>
-                    <option value="saturday" @if($event->day == 'saturday') selected @endif>Saturday</option>
+                    <option value="sunday" @if($event->day == 'Sunday') selected @endif>Sunday</option>
+                    <option value="monday" @if($event->day == 'Monday') selected @endif>Monday</option>
+                    <option value="tuesday" @if($event->day == 'Tuesday') selected @endif>Tuesday</option>
+                    <option value="wednesday" @if($event->day == 'Wednesday') selected @endif>Wednesday</option>
+                    <option value="thursday" @if($event->day == 'Thursday') selected @endif>Thursday</option>
+                    <option value="friday" @if($event->day == 'Friday') selected @endif>Friday</option>
+                    <option value="saturday" @if($event->day == 'Saturday') selected @endif>Saturday</option>
                 </select>
             </div>
             <div class="col-md-12">
@@ -121,6 +121,28 @@
         });
 
     </script>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>
 
+        tinymce.init({
+            selector: 'textarea',
+            height: 140,
+            theme: 'modern',
+            plugins: [
+                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+            ],
+            toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+            image_advtab: true,
+            imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
+            content_css: [
+                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                '//www.tinymce.com/css/codepen.min.css'
+            ]
+        });
+    </script>
 
 @endsection

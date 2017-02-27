@@ -7,6 +7,7 @@ use App\Position;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Input;
+use Exception;
 
 class MemberController extends Controller
 {
@@ -23,7 +24,8 @@ class MemberController extends Controller
      */
     public function index()
     {
-        //
+            $members=Member::orderBy('firstname','asc')->paginate(10);
+        return view('controlPanel.members.index')->with('members',$members);
     }
 
     /**
@@ -33,13 +35,13 @@ class MemberController extends Controller
      */
     public function create()
     {
-        $members=Member::all();
+        //$members=Member::all();
         $positions=Position::all();
         $pos=array();
         foreach ($positions as $position){
             $pos[$position->id]=$position->title;
         }
-        return view('controlPanel.members.create')->with('members',$members)->with('positions',$pos);
+        return view('controlPanel.members.create')->with('positions',$pos);
     }
 
     /**
@@ -70,8 +72,17 @@ class MemberController extends Controller
         $member->zip=$request->zip;
         $member->state=$request->state;
         $member->phone=$request->phone;
+        try{
+            $member->save();
+        }catch (Exception $ex){
+           // $request->session()->flash('failure',$ex->getCode());
+            if($ex->getCode() == 23000){
+                $request->session()->flash('failure','Duplicate Emails, can\'t be created');
+            }
 
-        $member->save();
+            return redirect()->back();
+        }
+
 
         if(isset($request->positions)){
             $member->positions()->sync($request->positions,false);
@@ -79,7 +90,7 @@ class MemberController extends Controller
             $member->positions()->sync(array(),false);
         }
         $request->session()->flash('success','Address created successfully');
-        return redirect()->back();
+        return redirect()->route('members.index');
     }
 
     /**

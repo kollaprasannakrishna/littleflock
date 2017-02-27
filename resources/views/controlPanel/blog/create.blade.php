@@ -53,22 +53,38 @@
             </div>
 
             <div class="col-md-12">
-                {{Form::submit('Create Post',array('class'=>'btn btn-success btn-lg btn-block','style'=>'margin-top:20px'))}}
+                <div class="col-md-6">
+                    {{Form::submit('Save',array('class'=>'btn btn-success btn-lg btn-block','style'=>'margin-top:20px','name'=>'save'))}}
+                </div>
+                <div class="col-md-6">
+                    {{Form::submit('Publish',array('class'=>'btn btn-success btn-lg btn-block','style'=>'margin-top:20px','name'=>'save'))}}
+                </div>
+
             </div>
+            {!! Form::close() !!}
+            {{--<div class="col-md-6">--}}
+                 {{--{!! Form::open(array('route'=>'file.upload','files'=>true)) !!}--}}
+                     {{--{{Form::label('featured_image1','Upload Featured Image')}}--}}
+                {{--{!!Form::file('featured_image1',['class'=>'form-control']) !!}--}}
 
-            {{--<div class="col-md-6">
-                 {!! Form::open(array('route'=>'file.upload','files'=>true)) !!}
-                     {{Form::label('featured_image1','Upload Featured Image')}}
-                     {{Form::file('featured_image1',['class'=>'form-control'])}}
-                     {{Form::submit('Upload',array('class'=>'btn btn-success','style'=>'margin-top:20px'))}}
-                 {!! Form::close() !!}
-             </div>
- <div class="col-md-6">
- {{HTML::image('assets/images/logo/little_logo_2.png')}}
- </div>--}}
-        </div>
+                     {{--{{Form::submit('Upload',array('class'=>'btn btn-success','style'=>'margin-top:20px'))}}--}}
+                 {{--{!! Form::close() !!}--}}
+             {{--</div>--}}
 
-        {!! Form::close() !!}
+
+            {{--<div class="col-md-6">--}}
+ {{--<img src="http://www.littleflock.org/laravel_code/public/images/1487444012.png" class="img-responsive">--}}
+                {{--{{HTML::image('images/1487443259.png')}}--}}
+
+                {{--<audio controls>--}}
+                    {{--<source src="" type="audio/ogg">--}}
+                    {{--<source src="http://www.littleflock.org/laravel_code/public/images/hello/new_audio.mp3" type="audio/mpeg">--}}
+                    {{--Your browser does not support the audio tag.--}}
+                {{--</audio>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+
+
     </div>
 
 @endsection

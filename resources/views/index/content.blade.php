@@ -26,7 +26,7 @@
                                         <span class="event-dayntime meta-data">{{$event->day}} | {{$event->time}}</span>
                                     </div>
                                     <div class="to-event-url">
-                                        <div><a href="#" class="btn btn-default btn-sm">Details</a></div>
+                                        <div><a href="{{route('get.event',$event->name)}}" class="btn btn-default btn-sm">Details</a></div>
                                     </div>
                                 </li>
                             @endforeach

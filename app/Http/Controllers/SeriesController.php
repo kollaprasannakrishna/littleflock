@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Series;
 use App\Sermon;
 use Illuminate\Http\Request;
+use File;
 
 class SeriesController extends Controller
 {
@@ -52,7 +53,8 @@ class SeriesController extends Controller
 
         $series->save();
 
-        \Storage::makeDirectory('sermons/'.$request->name);
+        $directory='audio/sermons/'.$request->name;
+        File::makeDirectory($directory, $mode = 0777, true, true);
 
         $request->session()->flash('success','Series created Succesfully');
 
@@ -100,8 +102,8 @@ class SeriesController extends Controller
         $series->name=$request->name;
 
         $series->save();
-        $oldpath=storage_path('app/sermons/'.$oldSeriesName);
-        $newpath=storage_path('app/sermons/'.$request->name);
+        $oldpath=public_path('audio/sermons/'.$oldSeriesName);
+        $newpath=public_path('audio/sermons/'.$request->name);
         rename($oldpath,$newpath);
 
         $request->session()->flash('success','Series created Succesfully');
@@ -122,10 +124,17 @@ class SeriesController extends Controller
             $request->session()->flash('failure',$series->name.' Series Can\'t be  deleted');
             return redirect()->route('series.create');
         }
+
+        $files = glob('audio/sermons/'.$series->name.'/'.'*'); //get all file names
+        foreach($files as $file){
+            if(is_file($file))
+                unlink($file); //delete file
+        }
+        rmdir('audio/sermons/'.$series->name);
         foreach ($series->sermons as $sermon) {
             $sermon = Sermon::find($sermon->id);
-            $sermon->series_id = 4;
-            $sermon->save();
+            //$sermon->series_id = 4;
+            $sermon->delete();
         }
         $series->delete();
         $request->session()->flash('success',$series->name.' Series Deleted SuccessFully');

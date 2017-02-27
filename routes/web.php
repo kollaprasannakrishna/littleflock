@@ -11,11 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    $latesEvent=\App\Event::take(1)->orderBy('date','asc')->get();
-    $events=\App\Event::take(3)->orderBy('date','asc')->get();
-    return view('landing.index')->with('events',$events)->with('latestEvent',$latesEvent);
-});
+Route::get('/','PagesController@getHome');
 
 Route::get('/app',function (){
    return view('layouts.app');
@@ -55,7 +51,13 @@ Route::get('contact',['uses'=>'PagesController@getContact','as'=>'contact']);
 
 Route::get('blog',['uses'=>'PagesController@getBlog','as'=>'blog']);
 
-Route::get('single-event/{event}');
+Route::get('single-event/{event}',['uses'=>'PagesController@getSingleEvent','as'=>'get.event']);
+
+
+Route::get('images/{filename}',[
+    'uses'=>'ImageController@getEventImages',
+    'as' => 'getImage'
+]);
 
 
 //Control panel routes
@@ -138,8 +140,11 @@ Route::group(['middleware'=>'roles'],function (){
 
 
 //blog controller
-Route::get('single-blog/{slug}',['uses'=>'BlogController@getSingle',
+Route::get('blog/{slug}',['uses'=>'BlogController@getSingle',
     'as'=>'blog.single',
+]);
+Route::get('sermons-all/{sermon}',['uses'=>'PagesController@getSingleSermon',
+    'as'=>'sermon.single',
 ]);
 
 
