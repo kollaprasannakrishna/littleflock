@@ -87,7 +87,15 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //dd($request);
         $user=User::find($id);
+        if($request->active == 'true'){
+            $user->active= 1;
+        }else {
+            $user->active= 0;
+        }
+
+        $user->save();
         if(isset($request->roles)){
             $user->roles()->sync($request->roles,true);
         }else{

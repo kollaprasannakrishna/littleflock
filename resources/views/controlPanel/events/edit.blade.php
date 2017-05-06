@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('header','Edit '. $event->name)
 @section('title','| Edit Event')
 
 @section('styles')
@@ -13,70 +13,151 @@
 
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Edit Events</h1>
-                <hr>
+
+    <div class="row remove-margin-bottom add-top-40">
+        <div class="col s12 m12 l12">
+            <div class="row remove-margin-bottom">
+                <div class="col s12 m12 l12">
+                    <div class="card-panel white z-depth-2 lighten-3 remove-margin-bottom">
+
+
+                        <div class="row">
+                            {!! Form::model($event,['route'=>['events.update',$event->id],'files'=>true,'method'=>'PUT']) !!}
+                            <div class="col s12">
+                                <div class="row">
+                                    <div class="input-field col s12 m4 l4">
+                                        {{Form::label('name','Title:')}}
+                                        {{Form::text('name',null,array('class'=>'validate'))}}
+
+                                    </div>
+                                    <div class="input-field col s12 m4 l4">
+
+                                        {{ Form::label('time','Time:') }}
+                                        {{Form::text('time',null,array('class'=>'timepicker validate'))}}
+
+
+                                    </div>
+                                    <div class="input-field col s12 m4 l4">
+
+
+                                        {{--{{Form::label('type','Event Type')}}--}}
+                                        <select name="type" id="mylist" value="{{$event->type}}">
+                                            <option value="" disabled>Choose your option</option>
+                                            <option value="weekly" @if($event->type == 'weekly') selected @endif>Weekly</option>
+                                            <option value="monthly" @if($event->type == 'monthly') selected @endif>Monthly</option>
+                                            <option value="special" @if($event->type == 'special') selected @endif>Special</option>
+                                        </select>
+
+                                        <label>Type</label>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="input-field col s12 m4 l4">
+                                        {{ Form::label('date','Date:') }}
+                                        {{Form::date('date',null,['class'=>'datepicker'])}}
+
+                                    </div>
+                                    <div class="input-field col s12 m4 l4">
+
+                                        {{Form::select('venue_id',$venues,null,['class'=>'validate'])}}
+                                        {{Form::label('venue_id','Venue:')}}
+                                    </div>
+                                    <div class="input-field col s12 m4 l4">
+
+
+                                        <select name="day" value="{{$event->day}}">
+                                            <option value="" disabled>Choose your option</option>
+                                            <option value="sunday" @if($event->day == 'Sunday') selected @endif>Sunday</option>
+                                            <option value="monday" @if($event->day == 'Monday') selected @endif>Monday</option>
+                                            <option value="tuesday" @if($event->day == 'Tuesday') selected @endif>Tuesday</option>
+                                            <option value="wednesday" @if($event->day == 'Wednesday') selected @endif>Wednesday</option>
+                                            <option value="thursday" @if($event->day == 'Thursday') selected @endif>Thursday</option>
+                                            <option value="friday" @if($event->day == 'Friday') selected @endif>Friday</option>
+                                            <option value="saturday" @if($event->day == 'Saturday') selected @endif>Saturday</option>
+
+                                        </select>
+                                        {{Form::label('day','Event Day')}}
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="file-field input-field col s8">
+                                        <div class="btn">
+                                            <span>Featured Image</span>
+                                            {{Form::file('featured_image')}}
+                                        </div>
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path validate" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col s4">
+                                        <input type="checkbox" id="donation" name="donation" />
+                                        <label for="donation">Needs donation?</label>
+
+                                    </div>
+                                    <div class="input-field col s12 m6 l6" id="monthsDay">
+
+                                        <select  multiple='multiple' name='monthsDay[]' >
+                                            <option value="" disabled selected>Choose your option</option>
+                                            <option value='1'>1st Month</option>
+                                            <option value='2'>2nd Month</option>
+                                            <option value='3'>3rd Month</option>
+                                            <option value='4'>4th Month</option>
+                                            <option value='5'>5th Month</option>
+                                        </select>
+                                        {{Form::label('day','Event Day')}}
+                                    </div>
+                                </div>
+                                <div class="row"  id="donation_check">
+                                    <div class="col s4">
+                                        {{Form::label('goal','Estimated Amount:')}}
+                                        {{Form::text('goal',is_null($event->fundraisingEvent)? null:$event->fundraisingEvent->goal,array('class'=>'validate'))}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="input-field col s12 m12 l12">
+                                            {{Form::label('description','Event Description:')}}
+                                            {{Form::textarea('description',null,array('class'=>'materialize-textarea'))}}
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row">
-            {!! Form::model($event,['route'=>['events.update',$event->id],'files'=>true,'method'=>'PUT']) !!}
-            <div class="col-md-4">
-                {{Form::label('name','Event Title:')}}
-                {{Form::text('name',null,array('class'=>'form-control'))}}
-
-
-                {{ Form::label('date','Event Date:') }}
-                {{Form::date('date',null,['class'=>'form-control'])}}
-
-                {{Form::label('featured_image','Upload Featured Image')}}
-                {{Form::file('featured_image',['class'=>'form-control'])}}
-
-            </div>
-            <div class="col-md-4">
-                {{ Form::label('time','Event Time:') }}
-                <input type="text" class="form-control timepicker" name="time">
-
-                {{Form::label('venue_id','Venue:')}}
-                {{Form::select('venue_id',$venues,null,['class'=>'form-control'])}}
-
-
-
-
-            </div>
-            <div class="col-md-4">
-                {{Form::label('type','Event Type')}}
-                <select class="form-control" name="type" id="mylist" value="{{$event->type}}">
-                    <option value="weekly" @if($event->type == 'weekly') selected @endif>Weekly</option>
-                    <option value="monthly" @if($event->type == 'monthly') selected @endif>Monthly</option>
-                    <option value="special" @if($event->type == 'special') selected @endif>Special</option>
-                </select>
-
-                {{Form::label('day','Event Day')}}
-                <select class="form-control" name="day" value="{{$event->day}}">
-                    <option value="sunday" @if($event->day == 'Sunday') selected @endif>Sunday</option>
-                    <option value="monday" @if($event->day == 'Monday') selected @endif>Monday</option>
-                    <option value="tuesday" @if($event->day == 'Tuesday') selected @endif>Tuesday</option>
-                    <option value="wednesday" @if($event->day == 'Wednesday') selected @endif>Wednesday</option>
-                    <option value="thursday" @if($event->day == 'Thursday') selected @endif>Thursday</option>
-                    <option value="friday" @if($event->day == 'Friday') selected @endif>Friday</option>
-                    <option value="saturday" @if($event->day == 'Saturday') selected @endif>Saturday</option>
-                </select>
-            </div>
-            <div class="col-md-12">
-                {{Form::label('description','Event Description:')}}
-                {{Form::textarea('description',null,array('class'=>'form-control'))}}
-
-                {{Form::submit('Update Event',array('class'=>'btn btn-success btn-block','style'=>'margin-top:20px'))}}
-
-            </div>
-
-            {!! Form::close() !!}
-
-        </div>
-
     </div>
+
+    <div class="row adjust-fab-toolbar">
+        <div class="col s12 m12 l12">
+            <div class="col s12 m12 l12">
+                <div class="fixed-action-btn toolbar">
+                    <a class="btn-floating btn-large red">
+                        <i class="large material-icons">mode_edit</i>
+                    </a>
+                    <ul>
+                        <li class="waves-effect waves-light"> {{Form::submit('Save',array('class'=>'btn','style'=>'margin-top:10px','name'=>'save'))}}</li>
+                        <li class="waves-effect waves-light">{{Form::submit('Publish',array('class'=>'btn','style'=>'margin-top:10px','name'=>'save'))}}</li>
+                        <li class="waves-effect waves-light"><a href="#!">Cancle</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        {!! Form::close() !!}
+    </div>
+
 
 
 @endsection
@@ -91,7 +172,7 @@
 
 
         $('.select2-multi2').select2();
-        $('.datepicker').dateDropper();
+
         $('.timepicker').timeDropper({
             setCurrentTime:false
         });
@@ -99,24 +180,35 @@
         $( document ).ready(function() {
             $("#mylist").change();
         });
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15, // Creates a dropdown of 15 years to control year
+            format: 'yyyy/mm/d',
+        });
 
-        $('#mylist').on('change',function(){
+        $('#mylist').change(function(){
             if( $(this).val() == 'monthly'){
-                var newLabel=$("<label id='mylabel'>How many times in a month?:</label>");
-                var newInput=$("<select class='form-control' multiple='multiple' name='monthsDay[]'>" +
-                        "<option value='1'>1st Month</option>" +
-                        "<option value='2'>2nd Month</option>" +
-                        "<option value='3'>3rd Month</option>" +
-                        "<option value='4'>4th Month</option>" +
-                        "<option value='5'>5th Month</option></select>")
-                        .attr("id", "myfieldid");
-                var newSel=$(' <select class="form-control select2-multi" name="tags[]" multiple="multiple"> </select>');
-                $('#mylist').after(newLabel);
-                $('#mylabel').after(newInput);
+                $('#monthsDay').show();
             }else{
-                $('#mylabel').remove();
-                $('#myfieldid').remove();
+                $('#monthsDay').hide();
+            }
+        });
 
+        $(document).ready(function(){
+            {{--{{dd(isset($event->relation))}}--}}
+            @if(!is_null($event->fundraisingEvent))
+                $('#donation').click();
+            @else
+                $('#donation_check').hide();
+            @endif
+
+        });
+
+        $('#donation').change(function(){
+            if($(this).prop("checked")) {
+                $('#donation_check').show();
+            } else {
+                $('#donation_check').hide();
             }
         });
 
@@ -127,21 +219,14 @@
         tinymce.init({
             selector: 'textarea',
             height: 140,
-            theme: 'modern',
+            menubar:false,
             plugins: [
-                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                'searchreplace wordcount visualblocks visualchars code fullscreen',
-                'insertdatetime media nonbreaking save table contextmenu directionality',
-                'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table contextmenu paste code'
             ],
-            toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-            toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
-            image_advtab: true,
-            imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
-            content_css: [
-                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-                '//www.tinymce.com/css/codepen.min.css'
-            ]
+            toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            content_css: '//www.tinymce.com/css/codepen.min.css'
         });
     </script>
 

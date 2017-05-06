@@ -3,80 +3,105 @@
 @section('title','| All Posts')
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>All Members</h1>
 
+    <div class="row remove-margin-bottom add-top-10 row-padding">
+        <div class="col s12 m12 l12">
+            <div class="row remove-margin-bottom">
+                <div class="col s12 m12 l12">
+                    <div class="card-panel white z-depth-2 lighten-3 remove-margin-bottom padding-null">
+                        <nav class="grad-back">
+                            <div class="nav-wrapper">
+                                <form>
+                                    <div class="input-field">
+                                        <input id="search_name" type="search" required>
+                                        <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                                        <i class="material-icons">close</i>
+                                    </div>
+                                </form>
+                            </div>
+                        </nav>
 
-            </div>
-            <div class="col-md-12">
-                <div class="form-group-lg">
-                    <input type="text" class="form-control" placeholder="Search table" id="search_name">
-                </div>
-            </div>
-            <div class="col-md-12">
-                <hr>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-hover" id="table">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>First name</th>
-                            <th>Lasr name</th>
-                            <th>email</th>
-                            <th>Address 1</th>
-                            <th>Address 2</th>
-                            <th>City</th>
-                            <th>State</th>
-                            <th>Zip</th>
-                            <th>Contact</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($members as $member)
+                        <table class="highlight responsive-table bordered striped">
+                            <thead>
                             <tr>
-                                <td>{{$member->id}}</td>
-                                <td>{{$member->firstname}}</td>
-                                <td>{{$member->lastname}}</td>
-                                <td>{{$member->email}}</td>
-                                <td>{{$member->address1}}</td>
-                                <td>{{$member->address2}}</td>
-                                <td>{{$member->city}}</td>
-                                <td>{{$member->state}}</td>
-                                <td>{{$member->zip}}</td>
-                                <td>{{$member->phone}}</td>
-
-                                <td><a href="{{route('members.edit',$member->id)}}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                                {{--<td><a href="{{route('venue.show',$venue->id)}}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a></td>--}}
-                                <td>{!! Form::open(['route'=>['members.destroy',$member->id],'method'=>'DELETE']) !!}
-                                    {{Form::submit('Delete',['class'=>'btn btn-danger btn-xs'])}}
-                                    {!! Form::close() !!}
-
-                                    {{--<a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>--}}</td>
+                                <th>#</th>
+                                <th>First name</th>
+                                <th>Lasr name</th>
+                                <th>email</th>
+                                <th>Address 1</th>
+                                <th>Address 2</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Zip</th>
+                                <th>Contact</th>
+                                <!-- <th data-field="price"></th>
+                                <th data-field="price"></th> -->
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+
+                            <tbody id="table">
+                            @foreach($members as $member)
+                                <tr>
+                                    <td>{{$member->id}}</td>
+                                    <td>{{$member->firstname}}</td>
+                                    <td>{{$member->lastname}}</td>
+                                    <td>{{$member->email}}</td>
+                                    <td>{{$member->address1}}</td>
+                                    <td>{{$member->address2}}</td>
+                                    <td>{{$member->city}}</td>
+                                    <td>{{$member->state}}</td>
+                                    <td>{{$member->zip}}</td>
+                                    <td>{{$member->phone}}</td>
+                                    <td>
+                                        <div class="fixed-action-btn horizontal edit-button">
+                                            <a class="btn-floating btn-small red">
+                                                <i class="large material-icons">mode_edit</i>
+                                            </a>
+                                            <ul>
+                                                <li><a class="btn-floating red" href="{{route('members.edit',$member->id)}}"><i class="material-icons">mode_edit</i></a></li>
+                                                {{--<li><a class="btn-floating yellow darken-1" href="{{route('posts.show',$post->id )}}"><i class="material-icons">visibility</i></a></li>--}}
+                                                <li>{!! Form::open(['route'=>['members.destroy',$member->id],'method'=>'DELETE']) !!}
+                                                    {{Form::submit('Delete',['class'=>'btn-floating red'])}}
+                                                    {!! Form::close() !!}</li>
+                                                {{--<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>--}}
+                                            </ul>
+                                        </div>
+                                        <div class="hide-on-large-only">
+                                            <div class="col s12 m12">
+                                                <a href="{{route('members.edit',$member->id)}}" class="btn btn-primary btn-xs">Edit</a>
+                                            </div><br>
+
+                                            <div class="col s12 m12 add-top-10 add-bottom-10">
+                                                {!! Form::open(['route'=>['members.destroy',$member->id],'method'=>'DELETE']) !!}
+                                                {{Form::submit('Delete',['class'=>'btn btn-danger btn-xs'])}}
+                                                {!! Form::close() !!}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <!-- <td><i class="material-icons small">mode_edit</i></td>
+                                    <td><i class="material-icons small">delete</i></td> -->
+                                </tr>
+
+                            @endforeach
+                            </tbody>
+                        </table>
+
+                        <div class="col s12 m12 l12 center">
+                            {{$members->links()}}
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
-    <div class="text-center">
-        {{$members->links()}}
-    </div>
+
+
+
+
 @endsection
 
 @section('scripts')
-    {!! Html::script('assets/js/paging.js') !!}
+
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     <script>
         var $rows = $('#table tr');

@@ -1,21 +1,21 @@
 @if(Session::has('success'))
-    <div class="alert alert-success" role="alert">
-        <strong>Success:</strong> {{Session::get('success')}}
-    </div>
+
+    <a class="btn" id="success" onclick="Materialize.toast('{{Session::get('success')}}', 4000)" style="visibility: hidden">Toast!</a>
 @endif
 @if(Session::has('failure'))
-    <div class="alert alert-danger" role="alert">
-        <strong>Error:</strong> {{Session::get('failure')}}
-    </div>
+    <a class="btn" id="failure" onclick="Materialize.toast('{{Session::get('failure')}}', 4000)" style="visibility: hidden">Toast!</a>
 @endif
-
-@if(count($errors) > 0)
-    <div class="alert alert-danger" role="alert">
-        <strong>Errors:</strong>
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-
-    </div>
-
+@if(count($errors)>0)
+    @foreach($errors->all() as $error)
+        <a class="btn" id="failure" onclick="Materialize.toast('{{$error}}', 4000)" style="visibility: hidden">Toast!</a>
+    @endforeach
 @endif
+@section('scripts')
+    <script>
+        @if(Session::has('success'))
+            $("#success").trigger('click');
+        @endif
+
+
+    </script>
+@endsection

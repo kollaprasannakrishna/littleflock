@@ -62,6 +62,7 @@ class PostController extends Controller
 
         ));
 
+
         $post=new Post();
 
         $post->title=$request->title;
@@ -69,14 +70,16 @@ class PostController extends Controller
         $post->slug=$request->slug;
         $post->category_id=$request->category_id;
         if($request->hasFile('featured_image')){
-
             $image=$request->file('featured_image');
             $filename=$request->slug.time().".".$image->getClientOriginalExtension();
+            $small_filename=$request->slug.time()."300x300.".$image->getClientOriginalExtension();
             $directory='images/posts/';
             File::makeDirectory($directory, $mode = 0777, true, true);
             $location=public_path('images/posts/'.$filename);
+            $small_location=public_path('images/posts/'.$small_filename);
 
             Image::make($image)->resize(800,400)->save($location);
+            Image::make($image)->resize(300,300)->save($small_location);
 
 //            $filename=time().'.'.$image->getClientOriginalExtension();
 //            $location=public_path('blogImage/'.$filename);
@@ -86,6 +89,7 @@ class PostController extends Controller
 //            Image::make($image)->resize(800,400)->save($location);
             //$image->move($audioLocation,$filename);
             $post->image=$filename;
+            $post->small_image=$small_filename;
         }
         $post->status=$request->save;
 
@@ -100,7 +104,7 @@ class PostController extends Controller
         $request->session()->flash('success','Post create Sucessfully');
 
         return redirect()->route('posts.show',$post->id);
-       // return response()->json($post);
+
     }
 
     /**
@@ -180,14 +184,19 @@ class PostController extends Controller
 
             $image=$request->file('featured_image');
             $filename=$request->slug.time().".".$image->getClientOriginalExtension();
+            $small_filename=$request->slug.time()."300x300.".$image->getClientOriginalExtension();
             $location=public_path('images/posts/'.$filename);
+            $small_location=public_path('images/posts/'.$small_filename);
             Image::make($image)->resize(800,400)->save($location);
+            Image::make($image)->resize(300,300)->save($small_location);
             $oldFileName=public_path('images/posts/'.$post->image);
-
+            $small_odlFileName=public_path('images/posts/'.$post->small_image);
             $post->image=$filename;
+            $post->small_image=$small_filename;
 
             //Storage::delete($oldFileName);
             File::delete($oldFileName);
+            File::delete($small_odlFileName);
         }
         $post->status=$request->save;
         $post->title=$request->title;
@@ -203,7 +212,7 @@ class PostController extends Controller
             $post->tags()->sync(array(),true);
         }
 
-        $request->session()->flash('success','Post create Sucessfully');
+        $request->session()->flash('success','Post Updated Sucessfully');
 
         return redirect()->route('posts.show',$post->id);
 
@@ -219,9 +228,17 @@ class PostController extends Controller
     public function destroy(Request $request,$id)
     {
         $post=Post::find($id);
+
+        $oldFileName=public_path('images/posts/'.$post->image);
+        $small_oldFileName=public_path('images/posts/'.$post->small_image);
+        File::delete($oldFileName);
+        File::delete($small_oldFileName);
         $post->tags()->detach();
+
         $post->delete();
+
         $request->session()->flash('success','Post Deleted Sucessfully');
+
         return redirect()->route('posts.index');
     }
 

@@ -31,7 +31,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories=Category::all();
+        $categories=Category::orderBy('id','desc')->paginate(4);
         return view('controlPanel.category.create')->with('categories',$categories);
     }
 
@@ -44,7 +44,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,array(
-            'name'=>'required|min:5|max:50'
+            'name'=>'required|max:50'
         ));
         $category=new Category();
         $category->name=$request->name;
@@ -91,7 +91,7 @@ class CategoryController extends Controller
     {
         $category=Category::find($id);
         $this->validate($request,array(
-            'name'=>'required|min:5|max:50'
+            'name'=>'required|max:50'
         ));
 
         $category->name=$request->name;
@@ -112,13 +112,13 @@ class CategoryController extends Controller
     public function destroy(Request $request,$id)
     {
         $category=Category::find($id);
-        if($category->id == 4) {
+        if($category->id == 1) {
             $request->session()->flash('failure',$category->name.' Category Can\'t be  deleted');
             return redirect()->route('categories.create');
         }
         foreach ($category->posts as $post) {
             $post = Post::find($post->id);
-            $post->category_id = 4;
+            $post->category_id = 1;
             $post->save();
         }
         $category->delete();

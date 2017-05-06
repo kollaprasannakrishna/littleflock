@@ -1,23 +1,40 @@
 @extends('layouts.app')
 
+@section('header','Edit '.$tag->name.' Tag')
 @section('title','| Edit Tags')
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Edit Tags for Blog Posts</h1>
-                <hr>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                {!! Form::model($tag,['route'=>['tags.update',$tag->id],'method'=>'PUT']) !!}
-                {{Form::label('name','Tag Name')}}
-                {{Form::text('name',null,['class'=>'form-control'])}}
-                {{Form::submit('update new',['class'=>'btn btn-success btn-block','style'=>'margin-top:20px;'])}}
-                {!! Form::close() !!}
+
+    <div class="row remove-margin-bottom add-top-10 row-padding">
+        <div class="col s12 m12 l12">
+            <div class="row remove-margin-bottom">
+                <div class="col s12 m12 l12">
+                    <div class="card-panel white z-depth-2 lighten-3 remove-margin-bottom padding-null">
+
+                        <div class="row">
+                            {!! Form::model($tag,['route'=>['tags.update',$tag->id],'method'=>'PUT']) !!}
+                            <div class="col s12 m12 l12">
+                                <div class="input-field col s12 m10 l10">
+                                    {{Form::label('name','Tag Name')}}
+                                    {{Form::text('name',null,['class'=>'validate'])}}
+
+                                </div>
+                                <div class="col s12 m2 l2 add-top-20">
+                                    {{Form::submit('Update',['class'=>'waves-effect waves-light btn'])}}
+                                </div>
+                            </div>
+                            {!! Form::close() !!}
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
             </div>
         </div>
     </div>
+
+
 @stop

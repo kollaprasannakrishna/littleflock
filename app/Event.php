@@ -49,7 +49,7 @@ class Event extends Model
         $breakMontlyArr=explode(',',$event->monthsDay);
         $x=0;
         $allMontlyDays=array();
-
+        //dd($breakMontlyArr);
         foreach ($this->getMonthlyDays($y,$m,$day) as $daysInMonth){
             $allMontlyDays[$x]=$daysInMonth->format("Y-m-d");
             $x++;
@@ -57,7 +57,11 @@ class Event extends Model
         //dd($allMontlyDays);
         $onlyDays=array();
         for($z=0;$z<count($breakMontlyArr);$z++) {
-            $onlyDays[$z] =$allMontlyDays[$breakMontlyArr[$z]-1] ;
+            if($breakMontlyArr[$z] != 5){
+                $onlyDays[$z] =$allMontlyDays[$breakMontlyArr[$z]-1] ;
+            }else{
+                $onlyDays[$z]=end($allMontlyDays);
+            }
         }
 
 
@@ -77,5 +81,12 @@ class Event extends Model
     }
     public function venue(){
         return $this->belongsTo('App\Venue');
+    }
+
+    public function fundraisingEvent(){
+        return $this->hasOne('App\FundraisingEvent');
+    }
+    public function donations(){
+        return $this->hasOne('App\Donation');
     }
 }

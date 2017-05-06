@@ -3,12 +3,48 @@
 @section('title','| '.$post->title)
 
 @section('content')
-    <h1>{{$post->title}}</h1>
-    <p>{!! $post->body !!}</p>
-    <p>{{$post->slug}}</p>
-    <p>{{$post->category->name}}</p>
-    @foreach($post->tags as $tag)
-    <p>{{$tag->name}}</p>
-    @endforeach
-    <a href="{{route('blog.single',$post->slug)}}"> Get to single post</a>
+    <div class="row remove-margin-bottom add-top-40">
+        <div class="col s12 m12 l12">
+            <div class="row remove-margin-bottom">
+                <div class="col s12 m12 l12">
+                    <div class="card-panel white z-depth-2 lighten-3 remove-margin-bottom">
+
+                        <h4>{{$post->title}}</h4>
+                        <hr>
+                        {!! $post->body !!}
+
+                    </div>
+
+                    <div class="card-panel white z-depth-2 lighten-3 remove-margin-bottom">
+
+                        <h5>Catergory:</h5>
+                        <p>{{$post->category->name}}</p>
+                        <a href="{{route('blog.single',$post->slug)}}" target="_blank"> Get to single post</a>
+                    </div>
+                    <div class="card-panel white z-depth-2 lighten-3 remove-margin-bottom">
+
+                        @foreach($post->tags as $tag)
+                            <div class="chip">
+
+                                {{$tag->name}}
+                            </div>
+
+                        @endforeach
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
 @stop

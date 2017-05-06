@@ -5,49 +5,89 @@
     {!! Html::style('assets/css/select2.min.css') !!}
 @endsection
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <h1>Edit Emails</h1>
+    <div class="row remove-margin-bottom add-top-40">
+        <div class="col s12 m12 l12">
+            <div class="row remove-margin-bottom">
+                <div class="col s12 m12 l12">
+
+
+                    <div class="card-panel white z-depth-2 lighten-3 remove-margin-bottom">
+
+
+                        <div class="row">
+                            {!! Form::model($email,['route'=>['emails.update',$email->id],'method'=>'PUT']) !!}
+                            <div class="row">
+                                <div class="input-field col s12 m12 l12">
+
+                                    @if($email->type == 'group')
+                                        {{Form::select('to[]',$groups,null,['class'=>'form-control select2-multi','multiple'=>'multiple'])}}
+                                    @else
+                                        {{Form::select('to[]',$members,null,['class'=>'form-control select2-multi','multiple'=>'multiple'])}}
+                                    @endif
+                                    {{Form::label('to','To')}}
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12 m12 l12">
+                                    {{ Form::label('cc','CC') }}
+                                    {{Form::text('cc',null,array('class'=>'validate'))}}
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12 m12 l12">
+                                    {{ Form::label('subject','Subject') }}
+                                    {{Form::text('Subject',null,array('class'=>'validate'))}}
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l12">
+                                        {{Form::label('body','Email Body:')}}
+                                        {{Form::textarea('body',null,array('class'=>'validate fileData'))}}
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="file-field input-field">
+                                <div class="btn">
+                                    <span>Attachments</span>
+                                    <input type="file" multiple>
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" placeholder="Upload one or more files">
+                                </div>
+                            </div>
+
+                            <div class="col s12">
+
+
+                                <button class="btn waves-effect waves-light add-left-10" type="submit" name="save" style="float: right" value="Send">Send
+                                    <i class="material-icons right">send</i>
+                                </button>
+                                <button class="btn waves-effect waves-light" type="submit" name="save" style="float: right" value="Save">Save
+                                    <i class="material-icons right">send</i>
+                                </button>
+
+                            </div>
+
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
+
+
                 </div>
-
-
-                <hr>
             </div>
-            <div class="col-md-12">
-
-                <div class="col-md-12">
-                    {!! Form::model($email,['route'=>['emails.update',$email->id],'method'=>'PUT']) !!}
-
-                    {{Form::label('to','To')}}<br>
-                    @if($email->type == 'group')
-                        {{Form::select('to[]',$groups,null,['class'=>'form-control select2-multi','multiple'=>'multiple'])}}
-                    @else
-                        {{Form::select('to[]',$members,null,['class'=>'form-control select2-multi','multiple'=>'multiple'])}}
-                    @endif
-
-
-                    {{ Form::label('cc','CC') }}
-                    {{Form::text('cc',null,array('class'=>'form-control'))}}
-
-                    {{ Form::label('subject','Subject') }}
-                    {{Form::text('Subject',null,array('class'=>'form-control'))}}
-
-                    {{Form::label('body','Email Body:')}}
-                    {{Form::textarea('body',null,array('class'=>'form-control fileData'))}}
-
-                    {{Form::submit('Send',['class'=>'btn btn-success','style'=>'margin-top:20px; margin-left:450px;','name'=>'save'])}}
-                    {{Form::submit('Save',['class'=>'btn btn-success','style'=>'margin-top:20px;','name'=>'save'])}}
-                    {!! Form::close() !!}
-                </div>
-
-
-            </div>
-
         </div>
-
     </div>
+
+
 @stop
 
 

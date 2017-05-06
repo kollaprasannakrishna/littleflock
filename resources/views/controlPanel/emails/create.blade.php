@@ -5,83 +5,175 @@
     {!! Html::style('assets/css/select2.min.css') !!}
 @endsection
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <h1>Send Emails</h1>
-                </div>
-                <form id='form-select'>
-                    <div class="col-md-3 add-top-5">
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="optionsRadios" id="member_email" value="option1">
-                                Member Email
-                            </label>
+
+
+    <div class="row remove-margin-bottom add-top-40">
+        <div class="col s12 m12 l12">
+            <div class="row remove-margin-bottom">
+                <div class="col s12 m12 l12">
+                    <div class="card-panel white z-depth-2 lighten-3 remove-margin-bottom padding-null">
+
+                        <div class="row">
+                            <form id='form-select'>
+                                <div class="col s6">
+                                    <p style="float: right">
+                                        <input class="with-gap" name="group3" type="radio" id="member_email" />
+                                        <label for="member_email">Member Email</label>
+                                    </p>
+                                </div>
+                                <div class="col s6">
+                                    <p>
+                                        <input class="with-gap" name="group3" type="radio" id="group_email" />
+                                        <label for="group_email">Group Email</label>
+                                    </p>
+
+                                </div>
+                            </form>
+
                         </div>
+
+
                     </div>
-                    <div class="col-md-3 add-top-5">
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="optionsRadios" id="group_email" value="option1">
-                                Group Email
-                            </label>
-                        </div>
-                    </div>
-                </form>
-
-                <hr>
-            </div>
-            <div class="col-md-12">
-
-                        <div class="col-md-12" style='display:none' id="member_email_target">
-                            {!! Form::open(['route'=>['emails.memberSave'],'method'=>'POST']) !!}
-
-                                {{Form::label('to','To')}}<br>
-                                {{Form::select('to[]',$members,null,['class'=>'form-control select2-multi','multiple'=>'multiple'])}}
 
 
+                    <div class="card-panel white z-depth-2 lighten-3 remove-margin-bottom" style='display:none' id="member_email_target">
 
-                            {{ Form::label('cc','CC') }}
-                            {{Form::text('cc',null,array('class'=>'form-control'))}}
 
-                            {{ Form::label('subject','Subject') }}
-                            {{Form::text('subject',null,array('class'=>'form-control'))}}
+                        <div class="row">
+                            {!! Form::open(array('route'=>'emails.memberSave','class'=>'col s12','files'=>true)) !!}
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l12">
 
-                            {{Form::label('body','Email Body:')}}
-                            {{Form::textarea('body',null,array('class'=>'form-control fileData'))}}
+                                        {{Form::select('to[]',$members,null,['class'=>'form-control select2-multi','multiple'=>'multiple'])}}
+                                        {{Form::label('to','To')}}
+                                    </div>
 
-                            {{Form::submit('Send',['class'=>'btn btn-success','style'=>'margin-top:20px; margin-left:450px;','name'=>'save'])}}
-                            {{Form::submit('Save',['class'=>'btn btn-success','style'=>'margin-top:20px;','name'=>'save'])}}
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l12">
+                                        {{ Form::label('cc','CC') }}
+                                        {{Form::text('cc',null,array('class'=>'validate'))}}
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l12">
+                                        {{ Form::label('subject','Subject') }}
+                                        {{Form::text('subject',null,array('class'=>'form-control'))}}
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="input-field col s12 m12 l12">
+                                            {{Form::label('body','Email Body:')}}
+                                            {{Form::textarea('body',null,array('class'=>'form-control fileData'))}}
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="file-field input-field">
+                                    <div class="btn">
+                                        <span>Attachments</span>
+                                        <input type="file" multiple>
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text" placeholder="Upload one or more files">
+                                    </div>
+                                </div>
+
+                            <div class="col s12">
+
+
+                                <button class="btn waves-effect waves-light add-left-10" type="submit" name="save" style="float: right" value="Send">Send
+                                    <i class="material-icons right">send</i>
+                                </button>
+                                <button class="btn waves-effect waves-light" type="submit" name="save" style="float: right" value="Save">Save
+                                    <i class="material-icons right">send</i>
+                                </button>
+
+                            </div>
+
                             {!! Form::close() !!}
                         </div>
-
-                <div class="col-md-12" style='display:none' id="group_email_target">
-                    {!! Form::open(['route'=>['emails.groupSave'],'method'=>'POST']) !!}
-                    {{Form::label('to','To')}}
-                    {{Form::select('to[]',$groups,null,['class'=>'form-control select2-multi','multiple'=>'multiple'])}}
+                    </div>
 
 
+                    <div class="card-panel white z-depth-2 lighten-3 remove-margin-bottom" style='display:none' id="group_email_target">
 
-                    {{ Form::label('cc','CC') }}
-                    {{Form::text('cc',null,array('class'=>'form-control'))}}
 
-                    {{ Form::label('subject','Subject') }}
-                    {{Form::text('subject',null,array('class'=>'form-control'))}}
+                        <div class="row">
+                            {!! Form::open(array('route'=>'emails.groupSave','class'=>'col s12','files'=>true)) !!}
+                            <div class="row">
+                                <div class="input-field col s12 m12 l12">
 
-                    {{Form::label('body','Email Body:')}}
-                    {{Form::textarea('body',null,array('class'=>'form-control fileData'))}}
+                                    {{Form::select('to[]',$groups,null,['class'=>'form-control select2-multi','multiple'=>'multiple'])}}
+                                    {{Form::label('to','To')}}
+                                </div>
 
-                    {{Form::submit('Send',['class'=>'btn btn-success','style'=>'margin-top:20px; margin-left:450px;','name'=>'save'])}}
-                    {{Form::submit('Save',['class'=>'btn btn-success','style'=>'margin-top:20px;','name'=>'save'])}}
-                    {!! Form::close() !!}
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12 m12 l12">
+                                    {{ Form::label('cc','CC') }}
+                                    {{Form::text('cc',null,array('class'=>'validate'))}}
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12 m12 l12">
+                                    {{ Form::label('subject','Subject') }}
+                                    {{Form::text('subject',null,array('class'=>'form-control'))}}
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l12">
+                                        {{Form::label('body','Email Body:')}}
+                                        {{Form::textarea('body',null,array('class'=>'form-control fileData'))}}
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="file-field input-field">
+                                <div class="btn">
+                                    <span>Attachments</span>
+                                    <input type="file" multiple>
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" placeholder="Upload one or more files">
+                                </div>
+                            </div>
+
+                            <div class="col s12">
+
+                                <button class="btn waves-effect waves-light add-left-10" type="submit" name="save" style="float: right">Send
+                                    <i class="material-icons right">send</i>
+                                </button>
+                                <button class="btn waves-effect waves-light" type="submit" name="save" style="float: right">Save
+                                    <i class="material-icons right">send</i>
+                                </button>
+
+                            </div>
+
+
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
+
+
 @stop
 
 
@@ -101,21 +193,14 @@
         tinymce.init({
             selector: 'textarea',
             height: 140,
-            theme: 'modern',
+            menubar:false,
             plugins: [
-                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                'searchreplace wordcount visualblocks visualchars code fullscreen',
-                'insertdatetime media nonbreaking save table contextmenu directionality',
-                'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table contextmenu paste code'
             ],
-            toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-            toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
-            image_advtab: true,
-            imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
-            content_css: [
-                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-                '//www.tinymce.com/css/codepen.min.css'
-            ]
+            toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            content_css: '//www.tinymce.com/css/codepen.min.css'
         });
     </script>
     <script>
@@ -123,7 +208,7 @@
                 .ready(function () {
                     $("#member_email").click();
                 });
-        $('input[name=optionsRadios]').click(function () {
+        $('input[name=group3]').click(function () {
             if (this.id == "member_email") {
                 $("#member_email_target").show('slow');
                 $("#group_email_target").hide('slow');

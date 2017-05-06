@@ -132,6 +132,6 @@ class AddmemberController extends Controller
         $member=Member::find($id);
         $member->groups()->detach();
 
-        return redirect()->route('addmembers.create');
+        return redirect()->back();
     }
 }

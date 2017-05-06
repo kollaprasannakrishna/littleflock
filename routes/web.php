@@ -501,3 +501,5 @@ Route::group(['middleware'=>'roles'],function (){
         'roles'=>'Admin'
     ]);
 });
+
+Route::resource('donation','DonationController');

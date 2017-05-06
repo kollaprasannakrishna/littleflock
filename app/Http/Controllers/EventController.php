@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\FundraisingEvent;
 use App\Venue;
 use Illuminate\Http\Request;
 use Image;
@@ -91,7 +92,7 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-
+        //dd($request);
 
         $this->validate($request,array(
             'name'=>'required|max:255',
@@ -104,8 +105,10 @@ class EventController extends Controller
             'feature_image'=>'sometimes|image'
         ));
         $DateconvertToPHP=str_replace('/','-',$request->date);
-
+        //$DateconvertToPHP=date("d M,Y",strtotime($request->date));
         $mysqlDate=date("Y-m-d H:i:s",strtotime($DateconvertToPHP));
+
+        //dd($mysqlDate);
 
 
 
@@ -141,9 +144,21 @@ class EventController extends Controller
 
         $request->user()->events()->save($event);
 
+        if($request->has('donation')){
+            $fundraisingEvent=new FundraisingEvent();
+
+
+            $fundraisingEvent->goal=$request->goal;
+
+            $fundraisingEvent->reached=0.00;
+
+            $event->fundraisingEvent()->save($fundraisingEvent);
+
+        }
+
         $request->session()->flash('success','Event Created Successfully');
 
-        return redirect()->route('events.show',$event->id);
+        return redirect()->route('events.index');
 
     }
 
