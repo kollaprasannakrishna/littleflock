@@ -1,6 +1,6 @@
 @extends('layouts.app')
-
-@section('title','| Create Categories')
+@section('header','Create Members')
+@section('title','| Create Members')
 @section('styles')
     {!! Html::style('assets/css/select2.min.css') !!}
 @endsection
@@ -33,15 +33,17 @@
 
 
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+
+
+
     </div>
-        {!! Form::close() !!}
+    {!! Form::close() !!}
 
-
-
-    </div>
     {!! Form::open(['route'=>'members.store','class'=>'upload col s12','method'=>'POST']) !!}
     <div class="row remove-margin-bottom add-top-40">
         <div class="col s12 m12 l12">
@@ -53,49 +55,49 @@
 
                         <div class="row">
 
-                                <div class="row">
-                                    <div class="input-field col s12 m4 l4">
-                                        {{Form::label('firstname','First Name')}}
-                                        {{Form::text('firstname',null,['class'=>'validate'])}}
-                                    </div>
-                                    <div class="input-field col s12 m4 l4">
-                                        {{Form::label('lastname','Last Name')}}
-                                        {{Form::text('lastname',null,['class'=>'validate'])}}
-                                    </div>
-                                    <div class="input-field col s12 m4 l4">
+                            <div class="row">
+                                <div class="input-field col s12 m4 l4">
+                                    {{Form::label('firstname','First Name')}}
+                                    {{Form::text('firstname',null,['class'=>'validate'])}}
+                                </div>
+                                <div class="input-field col s12 m4 l4">
+                                    {{Form::label('lastname','Last Name')}}
+                                    {{Form::text('lastname',null,['class'=>'validate'])}}
+                                </div>
+                                <div class="input-field col s12 m4 l4">
 
-                                        {{Form::select('positions[]',$positions,null,['class'=>'select2-multi','multiple'=>'multiple'])}}
-                                        {{Form::label('positions','positions')}}
-                                    </div>
+                                    {{Form::select('positions[]',$positions,null,['class'=>'select2-multi','multiple'=>'multiple'])}}
+                                    {{Form::label('positions','positions')}}
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="input-field col s12 m4 l4">
+                                    {{Form::label('address1','Address 1')}}
+                                    {{Form::text('address1',null,['class'=>'validate'])}}
+                                </div>
+                                <div class="input-field col s12 m4 l4">
+                                    {{Form::label('address2','Address 2')}}
+                                    {{Form::text('address2',null,['class'=>'validate'])}}
+                                </div>
+                                <div class="input-field col s12 m4 l4">
+                                    {{Form::label('city','City')}}
+                                    {{Form::text('city',null,['class'=>'validate'])}}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12 m4 l4">
+                                    {{Form::label('state','State')}}
+                                    {{Form::text('state',null,['class'=>'validate'])}}
+                                </div>
+                                <div class="input-field col s12 m4 l4">
+                                    {{Form::label('zip','Zip Code')}}
+                                    {{Form::text('zip',null,['class'=>'validate'])}}
                                 </div>
 
-
-                                <div class="row">
-                                    <div class="input-field col s12 m4 l4">
-                                        {{Form::label('address1','Address 1')}}
-                                        {{Form::text('address1',null,['class'=>'validate'])}}
-                                    </div>
-                                    <div class="input-field col s12 m4 l4">
-                                        {{Form::label('address2','Address 2')}}
-                                        {{Form::text('address2',null,['class'=>'validate'])}}
-                                    </div>
-                                    <div class="input-field col s12 m4 l4">
-                                        {{Form::label('city','City')}}
-                                        {{Form::text('city',null,['class'=>'validate'])}}
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="input-field col s12 m4 l4">
-                                        {{Form::label('state','State')}}
-                                        {{Form::text('state',null,['class'=>'validate'])}}
-                                    </div>
-                                    <div class="input-field col s12 m4 l4">
-                                        {{Form::label('zip','Zip Code')}}
-                                        {{Form::text('zip',null,['class'=>'validate'])}}
-                                    </div>
-
-                                </div>
+                            </div>
                             <div class="row">
 
                                 <div class="input-field col s12 m4 l4">
@@ -110,17 +112,17 @@
                             </div>
 
 
-                                <div class="row">
-                                    <div class="file-field input-field">
-                                        <div class="btn">
-                                            <span>File</span>
-                                            <input type="file">
-                                        </div>
-                                        <div class="file-path-wrapper">
-                                            <input class="file-path validate" type="text">
-                                        </div>
+                            <div class="row">
+                                <div class="file-field input-field">
+                                    <div class="btn">
+                                        <span>File</span>
+                                        <input type="file">
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text">
                                     </div>
                                 </div>
+                            </div>
 
 
 
@@ -139,8 +141,7 @@
                         <i class="large material-icons">mode_edit</i>
                     </a>
                     <ul>
-                        <li class="waves-effect waves-light"><a href="#!"> {{Form::submit('Save',array('class'=>'btn','name'=>'save'))}}</a></li>
-                        <li class="waves-effect waves-light"><a href="#!">{{Form::submit('Publish',array('class'=>'btn','name'=>'save'))}}</a></li>
+                        <li class="waves-effect waves-light"><a href="#!"> {{Form::submit('Save',array('name'=>'save'))}}</a></li>
                         <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">publish</i></a></li>
                         {{--<li class="waves-effect waves-light"><a href="#!"><i class="material-icons">attach_file</i></a></li>--}}
                     </ul>

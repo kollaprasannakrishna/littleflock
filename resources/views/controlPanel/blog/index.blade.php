@@ -51,9 +51,13 @@
                                                 <i class="large material-icons">mode_edit</i>
                                             </a>
                                             <ul>
-                                                <li><a class="btn-floating red" href="{{route('posts.edit',$post->id)}}"><i class="material-icons">mode_edit</i></a></li>
                                                 <li><a class="btn-floating yellow darken-1" href="{{route('posts.show',$post->id )}}"><i class="material-icons">visibility</i></a></li>
+
+                                            @if(Auth::user() == $post->user)
+                                                <li><a class="btn-floating red" href="{{route('posts.edit',$post->id)}}"><i class="material-icons">mode_edit</i></a></li>
                                                 <li><a class="btn-floating green" href="{{route('posts.delete',$post->id)}}"><i class="material-icons">delete</i></a></li>
+                                                @endif
+
                                                 {{--<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>--}}
                                             </ul>
                                         </div>

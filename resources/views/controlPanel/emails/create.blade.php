@@ -1,6 +1,6 @@
 @extends('layouts.app')
-
-@section('title','| Create Categories')
+@section('header','Compose Email')
+@section('title','| Compose Email')
 @section('styles')
     {!! Html::style('assets/css/select2.min.css') !!}
 @endsection

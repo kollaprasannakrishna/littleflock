@@ -11,7 +11,7 @@
             <div class="">
                 <ul class="collapsible" data-collapsible="accordion">
                     <li>
-                        <a href="#!name" class="collapsible-header"><span class="white-text name">John Doe <i class="material-icons">arrow_drop_down</i></span></a>
+                        <a href="#!name" class="collapsible-header"><span class="white-text name">{{Auth::user()->name}} <i class="material-icons">arrow_drop_down</i></span></a>
                         <div class="collapsible-body c-ul-div">
                             <ul>
                                 <li><a href="#!">Settings <i class="material-icons">&#xE8B8;</i></a></li>

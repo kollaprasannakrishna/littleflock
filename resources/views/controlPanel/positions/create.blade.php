@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('header','Create Positions')
 
 @section('title','| Create Positions')
 

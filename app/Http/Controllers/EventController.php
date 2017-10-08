@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Donation;
 use App\Event;
 use App\FundraisingEvent;
 use App\Venue;
@@ -45,7 +46,7 @@ class EventController extends Controller
         $events=Event::all();
         foreach ($events as $event){
             if($event->type == 'weekly') {
-                if ($event->date < date("Y-m-d H:i:s")) {
+                while ($event->date < date("Y-m-d H:i:s")) {
                     $getNextDate = $eventModel->getNextDay($event->day, $event->date);
 
                     $event->date = $getNextDate;
@@ -236,6 +237,31 @@ class EventController extends Controller
             //Storage::delete($oldFileName);
             File::delete($oldFileName);
         }
+
+        if($request->has('donation')){
+
+            if(FundraisingEvent::where('event_id',$id)->first()){
+                $fundraisingEvent=FundraisingEvent::where('event_id',$id);
+            }else{
+                $fundraisingEvent=new FundraisingEvent();
+            }
+
+
+            $fundraisingEvent->goal=$request->goal;
+
+            $fundraisingEvent->reached=0.00;
+
+            $event->fundraisingEvent()->save($fundraisingEvent);
+
+        }else{
+            //dd(FundraisingEvent::where('event_id',$id)->first());
+            if(FundraisingEvent::where('event_id',$id)->first()) {
+                $fundraisingEvent = FundraisingEvent::where('event_id' , $id);
+
+                 //dd($fundraisingEvent);
+                $event->fundraisingEvent()->delete($fundraisingEvent);
+            }
+        }
         $event->active="YES";
         $event->name=$request->name;
         $event->date=$mysqlDate;
@@ -263,6 +289,12 @@ class EventController extends Controller
     {
         $event=Event::find($id);
         $eventName=$event->name;
+        if((FundraisingEvent::where('event_id',$id)->first() != null) && (Donation::where('event_id',$id)->first() == null)){
+            $fundraisingEvent=FundraisingEvent::where('event_id',$id);
+            $event->fundraisingEvent()->delete($fundraisingEvent);
+        }else{
+
+        }
         $event->delete();
 
         $request->session()->flash('success',$eventName.' Event Deleted Successfully');

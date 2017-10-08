@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Member;
 use App\Position;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Input;
 use Exception;
@@ -89,8 +90,9 @@ class MemberController extends Controller
         }else{
             $member->positions()->sync(array(),false);
         }
-        $request->session()->flash('success','Address created successfully');
-        return redirect()->route('members.index');
+        $request->session()->flash('success','Member created successfully');
+
+        return redirect()->route('members.create');
     }
 
     /**

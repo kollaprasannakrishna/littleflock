@@ -17,7 +17,7 @@ class PagesController extends Controller
         $events=\App\Event::all();
         foreach ($events as $event){
             if($event->type == 'weekly') {
-                if ($event->date < date("Y-m-d H:i:s")) {
+                while ($event->date < date("Y-m-d H:i:s")) {
                     $getNextDate = $eventModel->getNextDay($event->day, $event->date);
 
                     $event->date = $getNextDate;

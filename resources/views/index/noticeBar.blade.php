@@ -6,9 +6,11 @@
             <div class="col-md-3 col-sm-6 col-xs-6 notice-bar-title"> <span class="notice-bar-title-icon hidden-xs"><i class="fa fa-calendar fa-3x"></i></span> <span class="title-note">Next</span> <strong>Upcoming Event</strong> </div>
             <div class="col-md-3 col-sm-6 col-xs-6 notice-bar-event-title">
                 <h5><a href="{{route('get.event',$event->name)}}">    {{$event->name}} </a></h5>
+                <a href="http://maps.google.com/?q={{$event->venue->address1}} {{$event->venue->city}} {{$event->venue->state}} - {{$event->venue->zip}}" style="text-decoration: none" target="_blank">
+
                 <span class="meta-data">{{date('d',strtotime($event->date) )}} {{date('M',strtotime($event->date))}}, {{date('Y',strtotime($event->date) )}} - {{date('H:i',strtotime($event->time))}}<br>
                     {{$event->venue->name}}, {{$event->venue->address1}} {{$event->venue->city}} {{$event->venue->state}} - {{$event->venue->zip}}<br>
-                </span><br>
+                </span></a><br>
 
             </div>
             <div id="counter" class="col-md-4 col-sm-6 col-xs-12 counter" data-date="{{date('F',strtotime($event->date) )}} {{date('d',strtotime($event->date) )}}, {{date('Y',strtotime($event->date) )}} {{date('H:i',strtotime($event->time))}}">

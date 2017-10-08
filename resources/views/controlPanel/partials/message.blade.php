@@ -1,5 +1,4 @@
 @if(Session::has('success'))
-
     <a class="btn" id="success" onclick="Materialize.toast('{{Session::get('success')}}', 4000)" style="visibility: hidden">Toast!</a>
 @endif
 @if(Session::has('failure'))
@@ -12,9 +11,8 @@
 @endif
 @section('scripts')
     <script>
-        @if(Session::has('success'))
+
             $("#success").trigger('click');
-        @endif
 
 
     </script>

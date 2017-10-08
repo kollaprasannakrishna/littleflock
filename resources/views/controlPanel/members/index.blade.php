@@ -34,8 +34,7 @@
                                 <th>State</th>
                                 <th>Zip</th>
                                 <th>Contact</th>
-                                <!-- <th data-field="price"></th>
-                                <th data-field="price"></th> -->
+                                <th data-field="price"></th>
                             </tr>
                             </thead>
 
@@ -78,8 +77,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <!-- <td><i class="material-icons small">mode_edit</i></td>
-                                    <td><i class="material-icons small">delete</i></td> -->
+
                                 </tr>
 
                             @endforeach

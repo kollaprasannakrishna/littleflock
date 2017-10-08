@@ -6,6 +6,7 @@ use App\Category;
 use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
+use Auth;
 use Illuminate\Support\Facades\Storage;
 use Image;
 use File;
@@ -128,6 +129,9 @@ class PostController extends Controller
     public function edit($id)
     {
         $post=Post::find($id);
+        if(Auth::user() != $post->user) {
+            return redirect()->back();
+        }
         $categories=Category::all();
         $tags=Tag::all();
         $cat=array();
@@ -153,6 +157,9 @@ class PostController extends Controller
     {
 
         $post=Post::find($id);
+        if(Auth::user() != $post->user) {
+            return redirect()->back();
+        }
 
         $old_slug=$post->slug;
 
@@ -227,8 +234,12 @@ class PostController extends Controller
      */
     public function destroy(Request $request,$id)
     {
+
         $post=Post::find($id);
 
+        if(Auth::user() != $post->user) {
+            return redirect()->back();
+        }
         $oldFileName=public_path('images/posts/'.$post->image);
         $small_oldFileName=public_path('images/posts/'.$post->small_image);
         File::delete($oldFileName);

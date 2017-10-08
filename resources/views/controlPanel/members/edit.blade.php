@@ -1,6 +1,7 @@
 @extends('layouts.app')
+@section('header','Edit Members')
 
-@section('title','| Edit Categories')
+@section('title','| Edit Member')
 @section('styles')
     {!! Html::style('assets/css/select2.min.css') !!}
 @endsection
@@ -103,9 +104,8 @@
                         <i class="large material-icons">mode_edit</i>
                     </a>
                     <ul>
-                        <li class="waves-effect waves-light"><a href="#!"> {{Form::submit('Update',array('class'=>'btn','name'=>'save'))}}</a></li>
-                        <li class="waves-effect waves-light"><a href="#!">{{Form::submit('Publish',array('class'=>'btn','name'=>'save'))}}</a></li>
-                        <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">publish</i></a></li>
+                        <li class="waves-effect waves-light"><a href="#!">{{Form::submit('Update',array('name'=>'save'))}}</a></li>
+                        <li class="waves-effect waves-light"><a href="#!">Cancel</a></li>
                         {{--<li class="waves-effect waves-light"><a href="#!"><i class="material-icons">attach_file</i></a></li>--}}
                     </ul>
                 </div>

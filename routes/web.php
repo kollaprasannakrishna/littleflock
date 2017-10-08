@@ -54,10 +54,14 @@ Route::get('blog',['uses'=>'PagesController@getBlog','as'=>'blog']);
 Route::get('single-event/{event}',['uses'=>'PagesController@getSingleEvent','as'=>'get.event']);
 
 
-Route::get('images/{filename}',[
-    'uses'=>'ImageController@getEventImages',
-    'as' => 'getImage'
+//blog controller
+Route::get('blog/{slug}',['uses'=>'BlogController@getSingle',
+    'as'=>'blog.single',
 ]);
+Route::get('sermons-all/{sermon}',['uses'=>'PagesController@getSingleSermon',
+    'as'=>'sermon.single',
+]);
+
 
 
 //Control panel routes
@@ -101,12 +105,12 @@ Route::group(['middleware'=>'roles'],function (){
         'as'=>'posts.delete',
         'roles'=>['Admin','Blog']
     ]);
-});
+
 
 
 
 //category controller
-Route::group(['middleware'=>'roles'],function (){
+
     Route::get('categories',['uses'=>'CategoryController@index','as'=>'categories.index']);
 
     Route::POST('categories',['uses'=>'CategoryController@store',
@@ -135,23 +139,10 @@ Route::group(['middleware'=>'roles'],function (){
     ]);
 
 
-});
-
-
-
-//blog controller
-Route::get('blog/{slug}',['uses'=>'BlogController@getSingle',
-    'as'=>'blog.single',
-]);
-Route::get('sermons-all/{sermon}',['uses'=>'PagesController@getSingleSermon',
-    'as'=>'sermon.single',
-]);
-
-
 
 
 //tags controller
-Route::group(['middleware'=>'roles'],function (){
+
     Route::get('tags',['uses'=>'TagController@index','as'=>'tags.index']);
 
     Route::POST('tags',['uses'=>'TagController@store',
@@ -179,11 +170,10 @@ Route::group(['middleware'=>'roles'],function (){
         'roles'=>['Admin','Blog']
     ]);
 
-});
+
 
 //events controller
-//Route::resource('events','EventController');
-Route::group(['middleware'=>'roles'],function (){
+
     Route::get('events',['uses'=>'EventController@index','as'=>'events.index']);
 
     Route::POST('events',['uses'=>'EventController@store',
@@ -215,7 +205,15 @@ Route::group(['middleware'=>'roles'],function (){
         'roles'=>['Admin','Event']
     ]);
 
-});
+
+
+
+
+
+
+
+
+
 
 
 
@@ -224,7 +222,7 @@ Route::group(['middleware'=>'roles'],function (){
 
 //sermon controller
 //Route::resource('sermons','SermonController');
-Route::group(['middleware'=>'roles'],function (){
+
     Route::get('sermons',['uses'=>'SermonController@index','as'=>'sermons.index']);
 
     Route::POST('sermons',['uses'=>'SermonController@store',
@@ -256,12 +254,12 @@ Route::group(['middleware'=>'roles'],function (){
         'roles'=>['Admin','Sermon']
     ]);
 
-});
+
 
 //venue controller
 //Route::resource('venue','VenueController');
 
-Route::group(['middleware'=>'roles'],function (){
+
     Route::get('venue',['uses'=>'VenueController@index','as'=>'venue.index']);
 
     Route::POST('venue',['uses'=>'VenueController@store',
@@ -288,11 +286,11 @@ Route::group(['middleware'=>'roles'],function (){
         'as'=>'venue.edit',
         'roles'=>['Admin','Address']
     ]);
-});
+
 
 //series
 //Route::resource('series','SeriesController');
-Route::group(['middleware'=>'roles'],function (){
+
     Route::get('series',['uses'=>'SeriesController@index','as'=>'series.index']);
 
     Route::POST('series',['uses'=>'SeriesController@store',
@@ -323,13 +321,13 @@ Route::group(['middleware'=>'roles'],function (){
         'as'=>'series.delete',
         'roles'=>['Admin','Sermon']
     ]);
-});
+
 
 
 //members
 //Route::resource('members','MemberController');
 
-Route::group(['middleware'=>'roles'],function (){
+
     Route::get('members',['uses'=>'MemberController@index','as'=>'members.index']);
 
     Route::POST('members',['uses'=>'MemberController@store',
@@ -360,11 +358,11 @@ Route::group(['middleware'=>'roles'],function (){
         'as'=>'members.import',
         'roles'=>['Admin','member']
     ]);
-});
+
 
 //positions
 //Route::resource('positions','PositionController');
-Route::group(['middleware'=>'roles'],function (){
+
     Route::get('positions',['uses'=>'PositionController@index','as'=>'positions.index']);
 
     Route::POST('positions',['uses'=>'PositionController@store',
@@ -391,10 +389,10 @@ Route::group(['middleware'=>'roles'],function (){
         'as'=>'positions.edit',
         'roles'=>['Admin','member']
     ]);
-});
+
 //groups
 //Route::resource('groups','GroupController');
-Route::group(['middleware'=>'roles'],function (){
+
     Route::get('groups',['uses'=>'CategoryController@index','as'=>'groups.index']);
 
     Route::POST('groups',['uses'=>'GroupController@store',
@@ -421,10 +419,9 @@ Route::group(['middleware'=>'roles'],function (){
         'as'=>'groups.edit',
         'roles'=>['Admin','member']
     ]);
-});
+
 //Addmember
-//Route::resource('addmembers','AddmemberController');
-Route::group(['middleware'=>'roles'],function (){
+
     Route::get('addmembers',['uses'=>'AddmemberController@index','as'=>'addmembers.index']);
 
     Route::POST('addmembers',['uses'=>'AddmemberController@store',
@@ -451,10 +448,9 @@ Route::group(['middleware'=>'roles'],function (){
         'as'=>'addmembers.edit',
         'roles'=>['Admin','member']
     ]);
-});
+
 
 //emails
-Route::group(['middleware'=>'roles'],function (){
 
     Route::get('create-email',['uses'=>'EmailController@create','as'=>'emails.create','roles'=>['Admin','Email']]);
     Route::post('send-email',['uses'=>'EmailController@send','as'=>'emails.send','roles'=>['Admin','Email']]);
@@ -463,7 +459,7 @@ Route::group(['middleware'=>'roles'],function (){
     Route::get('all-emails',['uses'=>'EmailController@index','as'=>'emails.index','roles'=>['Admin','Email']]);
     Route::get('edit-member-email/{id}',['uses'=>'EmailController@editEmail','as'=>'emails.editEmail','roles'=>['Admin','Email']]);
     Route::put('update-email/{id}',['uses'=>'EmailController@update','as'=>'emails.update','roles'=>['Admin','Email']]);
-});
+
 
 
 
@@ -473,7 +469,6 @@ Route::group(['middleware'=>'roles'],function (){
 
 //Route::resource('admin','AdminController');
 
-Route::group(['middleware'=>'roles'],function (){
     Route::get('admin',['uses'=>'AdminController@index','as'=>'admin.index','roles'=>'Admin']);
 
     Route::POST('admin',['uses'=>'AdminController@store',

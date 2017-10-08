@@ -8,17 +8,18 @@
 @endsection
 
 @section('content')
-
     <div class="row remove-margin-bottom add-top-40">
         <div class="col s12 m12 l12">
             <div class="row remove-margin-bottom">
                 <div class="col s12 m12 l12">
                     <div class="card-panel white z-depth-2 lighten-3 remove-margin-bottom">
 
-                        {!! Form::open(['route'=>'sermons.store','files'=>true,'id'=>'eventForm']) !!}
+
                         <div class="row">
-                            <form class="col s12">
-                                <div class="row">
+
+                            {!! Form::open(array('route'=>'sermons.store','files'=>true,'class'=>'col s12')) !!}
+
+                            <div class="row">
                                     <div class="input-field col s12 m4 l4">
                                         {{Form::label('title','Sermon Title:')}}
                                         {{Form::text('title',null,array('class'=>'validate'))}}
@@ -101,7 +102,7 @@
                                     </div>
                                 </div>
 
-                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -125,22 +126,15 @@
             </div>
 
         </div>
-        {!! Form::close() !!}
+
 
     </div>
-
+    {!! Form::close() !!}
 
 
 @endsection
 
 @section('scripts')
-
-<script>
-    $('.datepicker').pickadate({
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15 // Creates a dropdown of 15 years to control year
-    });
-</script>
 
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script>

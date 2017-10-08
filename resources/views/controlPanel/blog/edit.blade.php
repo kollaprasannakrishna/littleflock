@@ -92,8 +92,8 @@
                         <i class="large material-icons">mode_edit</i>
                     </a>
                     <ul>
-                        <li class="waves-effect waves-light"> {{Form::submit('Update',array('class'=>'btn','style'=>'margin-top:10px','name'=>'save'))}}</li>
-                        <li class="waves-effect waves-light">{{Form::submit('Publish',array('class'=>'btn','style'=>'margin-top:10px','name'=>'save'))}}</li>
+                        <li class="waves-effect waves-light"> <a>{{Form::submit('Update',array('style'=>'margin-top:10px','name'=>'save'))}}</a></li>
+                        <li class="waves-effect waves-light"><a>{{Form::submit('Publish',array('style'=>'margin-top:10px','name'=>'save'))}}</a></li>
                         {{--<li class="waves-effect waves-light"><a href="#!">Update</a></li>--}}
                         <li class="waves-effect waves-light"><a href="#!">Cancle</a></li>
                     </ul>

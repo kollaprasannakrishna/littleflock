@@ -19,10 +19,10 @@
         <main>
             @yield('content')
         </main>
-        @endif
+    @endif
 
     @include('controlPanel.partials.message')
-        @include('controlPanel.partials.scripts')
+    @include('controlPanel.partials.scripts')
         @yield('scripts')
 </body>
 </html>
