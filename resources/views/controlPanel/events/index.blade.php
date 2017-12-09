@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @section('header','All Events')
 @section('title','| All Events')
-
+@section('floatingBtn')
+    <a href="{{route('events.create')}}" class="btn-floating btn-large waves-effect waves-light red right" id="floatingBtn" style="margin-right: 320px;margin-top: 5px;"><i class="material-icons">add</i></a>
+@endsection
 @section('content')
     <div class="row remove-margin-bottom add-top-10 row-padding">
         <div class="col s12 m12 l12">
@@ -46,7 +48,7 @@
                                 <tr class="{{$event->active =='YES'?'success    ':'danger'}}">
                                     <td>{{$event->id}}</td>
                                     <td>{{$event->name}}</td>
-                                    <td>{{$event->description}}</td>
+                                    <td>{{substr(strip_tags($event->description),0,80)}}{{strlen($event->description)>80?"....":""}}</td>
                                     <td>{{$event->date}}</td>
                                     <td>{{$event->time}}</td>
                                     <td>{{$event->venue->name }}</td>
@@ -59,9 +61,9 @@
                                                 <i class="large material-icons">mode_edit</i>
                                             </a>
                                             <ul>
-                                                <li><a class="btn-floating red" href="{{route('events.edit',$event->id)}}" ><i class="material-icons">insert_chart</i></a></li>
-                                                <li><a class="btn-floating yellow darken-1" href="{{route('events.show',$event->id)}}" ><i class="material-icons">format_quote</i></a></li>
-                                                <li><a class="btn-floating green" href="{{route('events.delete',$event->id)}}" ><i class="material-icons">publish</i></a></li>
+                                                <li><a class="btn-floating green" href="{{route('events.edit',$event->id)}}" ><i class="material-icons">mode_edit</i></a></li>
+                                                <li><a class="btn-floating yellow darken-1" href="{{route('events.show',$event->id)}}" ><i class="material-icons">visibility</i></a></li>
+                                                <li><a class="btn-floating red" href="{{route('events.delete',$event->id)}}" ><i class="material-icons">delete</i></a></li>
                                                 {{--<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>--}}
                                             </ul>
                                         </div>

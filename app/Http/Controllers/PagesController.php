@@ -56,10 +56,10 @@ class PagesController extends Controller
         return view('landing.index')->with('events',$events_home)->with('latestEvent',$latesEvent);
     }
     public function getGreetings(){
-        return view('aboutus.greetings');
+        return view('aboutus.aboutus');
     }
     public function getWhoWeAre(){
-        return view('aboutus.whoWeAre');
+        return view('aboutus.ourvision');
     }
     public function getWhatWeBelieve(){
         return view('aboutus.whatWeBelieve');
@@ -101,7 +101,7 @@ class PagesController extends Controller
         return view('pages.contact');
     }
     public function getBlog(){
-        $posts=Post::orderBy('id','desc')->paginate(3);
+        $posts=Post::where('status','Publish')->orderBy('id','desc')->paginate(3);
         return view('blog.blog')->with('posts',$posts);
     }
 

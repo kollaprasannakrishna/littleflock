@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('header','Delete Post')
 @section('title','| Delete Post')
 
 @section('content')
@@ -13,7 +13,7 @@
 
                         <h4>{{$post->title}}</h4>
                         {!! Form::open(['route'=>['posts.destroy',$post->id],'method'=>'DELETE']) !!}
-                        {{Form::submit('Delete',['class'=>'btn btn-primary btn-xs','style'=>'margin-top:-50px;float:right;'])}}
+                        {{Form::submit('Delete',['class'=>'btn red btn-xs','style'=>'margin-top:-50px;float:right;'])}}
                         {!! Form::close() !!}
 
                         <hr>

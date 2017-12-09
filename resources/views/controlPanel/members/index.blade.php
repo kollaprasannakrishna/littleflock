@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('header','All Members')
 @section('title','| All Posts')
 
 @section('content')
@@ -22,7 +22,7 @@
                         </nav>
 
                         <table class="highlight responsive-table bordered striped">
-                            <thead>
+                            <thead style="font-size: 13px;">
                             <tr>
                                 <th>#</th>
                                 <th>First name</th>
@@ -38,7 +38,7 @@
                             </tr>
                             </thead>
 
-                            <tbody id="table">
+                            <tbody id="table" style="font-size: 13px;">
                             @foreach($members as $member)
                                 <tr>
                                     <td>{{$member->id}}</td>

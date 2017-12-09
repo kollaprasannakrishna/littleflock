@@ -161,7 +161,7 @@ class MemberController extends Controller
             $member->positions()->sync(array(),true);
         }
         $request->session()->flash('success','Address Updated successfully');
-        return redirect()->back();
+        return redirect()->route('members.index');
     }
 
     /**

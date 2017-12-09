@@ -1,14 +1,14 @@
 @extends('layouts.main')
 
-@section('title','| Who We Are')
+@section('title','| About US')
 
 @section('content')
-    @include('aboutus.whoWeAre.header')
+    @include('aboutus.aboutus.header')
     <div class="main" role="main">
         <div id="content" class="content full">
-            <div class="container text-justify">
-                <div class="row">
-                    @include('aboutus.whoWeAre.content')
+            <div class="container" style="text-align: justify;">
+                <div class="row text-justify">
+                    @include('aboutus.aboutus.content')
                     @include('partials._sidebar')
                 </div>
             </div>

@@ -9,7 +9,6 @@
                 <li><a href="{{ url('/register')}}">Sign up</a></li>
                 <li><a href="contactdevloper.html">Contact</a></li>
             </ul>
-
         </div>
 
 

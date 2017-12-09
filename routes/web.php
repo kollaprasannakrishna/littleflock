@@ -21,9 +21,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('greetings',['uses'=>'PagesController@getGreetings','as'=>'greetings']);
+Route::get('aboutus',['uses'=>'PagesController@getGreetings','as'=>'aboutus']);
 
-Route::get('Who-we-are',['uses'=>'PagesController@getWhoWeAre','as'=>'whoWeAre']);
+Route::get('our-vision',['uses'=>'PagesController@getWhoWeAre','as'=>'ourvision']);
 
 Route::get('What-We-Believe',['uses'=>'PagesController@getWhatWeBelieve','as'=>'whatWeBelieve']);
 

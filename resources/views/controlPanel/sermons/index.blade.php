@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @section('header','All Sermons')
 @section('title','| All Sermons')
-
+@section('floatingBtn')
+    <a href="{{route('sermons.create')}}" class="btn-floating btn-large waves-effect waves-light red right" id="floatingBtn" style="margin-right: 320px;margin-top: 5px;"><i class="material-icons">add</i></a>
+@endsection
 @section('content')
 
     <div class="row remove-margin-bottom add-top-10 row-padding">
@@ -51,9 +53,9 @@
                                                 <i class="large material-icons">mode_edit</i>
                                             </a>
                                             <ul>
-                                                <li><a class="btn-floating red" href="{{route('sermons.edit',$sermon->id)}}" ><i class="material-icons">insert_chart</i></a></li>
-                                                <li><a class="btn-floating yellow darken-1" href="{{route('sermons.show',$sermon->id )}}" ><i class="material-icons">format_quote</i></a></li>
-                                                <li><a class="btn-floating green" href="{{route('sermons.delete',$sermon->id)}}" ><i class="material-icons">publish</i></a></li>
+                                                <li><a class="btn-floating green" href="{{route('sermons.edit',$sermon->id)}}" ><i class="material-icons">mode_edit</i></a></li>
+                                                <li><a class="btn-floating yellow darken-1" href="{{route('sermons.show',$sermon->id )}}" ><i class="material-icons">visibility</i></a></li>
+                                                <li><a class="btn-floating red" href="{{route('sermons.delete',$sermon->id)}}" ><i class="material-icons">delete</i></a></li>
                                                 {{--<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>--}}
                                             </ul>
                                         </div>

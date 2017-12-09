@@ -46,6 +46,15 @@
 
                                 </div>
 
+                                    <div class="input-field col s12 m6 l4">
+
+                                        {{Form::select('series_id',$seriess,null,['class'=>'form-control'])}}
+                                        {{Form::label('series_id','Series')}}
+
+                                    </div>
+
+
+
 
 
 

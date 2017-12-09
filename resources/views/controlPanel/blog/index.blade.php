@@ -2,7 +2,9 @@
 
 @section('header','All Posts')
 @section('title','| All Posts')
-
+@section('floatingBtn')
+    <a href="{{route('posts.create')}}" class="btn-floating btn-large waves-effect waves-light red right" id="floatingBtn" style="margin-right: 320px;margin-top: 5px;"><i class="material-icons">add</i></a>
+@endsection
 @section('content')
     <div class="row remove-margin-bottom add-top-10 row-padding">
         <div class="col s12 m12 l12">
@@ -54,8 +56,8 @@
                                                 <li><a class="btn-floating yellow darken-1" href="{{route('posts.show',$post->id )}}"><i class="material-icons">visibility</i></a></li>
 
                                             @if(Auth::user() == $post->user)
-                                                <li><a class="btn-floating red" href="{{route('posts.edit',$post->id)}}"><i class="material-icons">mode_edit</i></a></li>
-                                                <li><a class="btn-floating green" href="{{route('posts.delete',$post->id)}}"><i class="material-icons">delete</i></a></li>
+                                                <li><a class="btn-floating green" href="{{route('posts.edit',$post->id)}}"><i class="material-icons">mode_edit</i></a></li>
+                                                <li><a class="btn-floating red" href="{{route('posts.delete',$post->id)}}"><i class="material-icons">delete</i></a></li>
                                                 @endif
 
                                                 {{--<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>--}}

@@ -24,6 +24,9 @@ header, main, footer {
       .select2-container{
         margin-top: 0px !important;
       }
+      #floatingBtn{
+        margin:0px !important;
+      }
     }
 .width-50{
   width: 50%;
@@ -144,3 +147,11 @@ header, main, footer {
   margin-bottom: 10px;
 }
 
+.table_font{
+  font-size: 12px !important;
+}
+
+.floatingBtn{
+  margin-right: 320px !important;
+  margin-top: 10px !important;
+}

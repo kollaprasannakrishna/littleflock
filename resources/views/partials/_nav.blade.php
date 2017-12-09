@@ -9,9 +9,9 @@
 
                         <li><a href="#">About Us</a>
                             <ul class="dropdown">
-                                <li><a href="{{route('greetings')}}">Greetings</a></li>
-                                <li><a href="{{route('whoWeAre')}}">Who We Are</a></li>
-                                <li><a href="{{route('whatWeBelieve')}}">What We Believe</a></li>
+                                <li><a href="{{route('aboutus')}}">About Us</a></li>
+                                <li><a href="{{route('ourvision')}}">Our Vision</a></li>
+                                <li><a href="{{route('whatWeBelieve')}}"> Our Beliefs</a></li>
                                 <li><a href="{{route('calendar')}}">Calendar</a></li>
                             </ul>
                         </li>
@@ -51,12 +51,12 @@
 
                         <li><a href="#">Messages</a>
                             <ul class="dropdown">
-                                <li><a href="{{route('atLittleFlock')}}">At Little Flock</a></li>
+                                <li><a href="{{route('atLittleFlock')}}">At Zion House Of Prayer</a></li>
                                 <li><a href="{{route('atOthers')}}">Others</a></li>
                             </ul>
                         </li>
 
-                        <li><a href="{{route('gallery')}}">Gallery</a></li>
+                        <li><a href="{{route('gallery')}}">Events</a></li>
 
                         <li><a href="{{route('blog')}}">Blog</a></li>
 

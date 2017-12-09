@@ -158,6 +158,7 @@
             <div class="nav-wrapper grad-back">
                 <a href="#" class="brand-logo add-left-10">@yield('header')</a>
                 <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+                @yield('floatingBtn')
 
 
             </div>

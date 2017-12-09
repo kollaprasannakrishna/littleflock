@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('title','| '.$post->title)
+@section('header','Post')
 
+@section('floatingBtn')
+    <a href="{{route('posts.edit',$post->id)}}" class="btn-floating btn-large waves-effect waves-light red right" id="floatingBtn" style="margin-right: 320px;margin-top: 5px;"><i class="material-icons">mode_edit</i></a>
+@endsection
 @section('content')
     <div class="row remove-margin-bottom add-top-40">
         <div class="col s12 m12 l12">

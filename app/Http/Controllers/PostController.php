@@ -80,7 +80,7 @@ class PostController extends Controller
             $small_location=public_path('images/posts/'.$small_filename);
 
             Image::make($image)->resize(800,400)->save($location);
-            Image::make($image)->resize(300,300)->save($small_location);
+            Image::make($image)->resize(600,400)->save($small_location);
 
 //            $filename=time().'.'.$image->getClientOriginalExtension();
 //            $location=public_path('blogImage/'.$filename);

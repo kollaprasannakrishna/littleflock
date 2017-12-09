@@ -78,14 +78,15 @@ class SermonController extends Controller
         }
         if($request->hasFile('audio_file')){
             $audiofile=$request->file('audio_file');
-            $audiofilename=$request->title."_"."series".$request->date."_".time().".".$audiofile->getClientOriginalExtension();
-
+            $audiofilename=$sermon->title."_"."series"."_".time().".".$audiofile->getClientOriginalExtension();
+            $directory='audio/sermons/';
+            File::makeDirectory($directory, $mode = 0777, true, true);
             $audiolocation=public_path('audio/sermons/'.$series->name."/");
 
 
             $request->file('audio_file')->move($audiolocation, $audiofilename);
-
-            //$request->file('audio_file')->storeAs($location, $filename);
+//            dd($request->file('audio_file')->move($audiolocation, $audiofilename));
+//            $request->file('audio_file')->storeAs($audiolocation, $audiofilename);
             $sermon->audiolink=$audiofilename;
         }
         $sermon->series_id=$request->series_id;
@@ -106,7 +107,9 @@ class SermonController extends Controller
      */
     public function show($id)
     {
-        //
+        $sermon=Sermon::find($id);
+
+        return view('controlPanel.sermons.show')->with("sermon",$sermon);
     }
 
     /**
